@@ -1,0 +1,1288 @@
+@media (max-width: 480px) {
+  body {
+    background-color: aqua;
+    font-size: 400;
+    font-family: poppins;
+    width: 100dvw;
+    position: relative;
+  }
+  .header {
+    width: 100dvw;
+    position: relative;
+    background-color: rgb(89, 207, 223);
+    height: 100px;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    position: absolute;
+    height: 100%;
+    width: 26%;
+    background-image: url("logo.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-decoration: none;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  .menu {
+    position: absolute;
+    background-color: rgb(217, 217, 231);
+    border-radius: 50%;
+    padding: 15px;
+    font-size: large;
+    height: 50px;
+    width: 50px;
+    border: none;
+    cursor: pointer;
+    left: 85dvw;
+    top: -20px;
+  }
+
+
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 100px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    left: 300px;
+    border-radius: 10px;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  .about {
+    width: 100%;
+    height: 100dvh;
+    position: relative;
+    top: 5px;
+  }
+  .about h2 {
+    font-size: 1.2em;
+    position: absolute;
+    left: 5px;
+  }
+  .about img {
+    position: absolute;
+    height: 35dvh;
+    left: 60px;
+    top: 100px;
+    border-radius: 10px;
+  }
+  .about p {
+    position: absolute;
+    top: 400px;
+    font-size: 1.3em;
+    left: 5px;
+  }
+  .dropb {
+    display: none;
+  }
+
+  .products {
+    position: relative;
+    width: 100dvw;
+    top: -130px;
+  }
+  #container {
+    height: 120dvh;
+
+    width: 95dvw;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-decoration: none;
+    justify-content: space-around;
+    gap: 50px;
+    align-items: center;
+    color: black;
+    font-weight: 800;
+    font-size: 1.2em;
+  }
+  .div {
+    position: relative;
+    border-radius: 10px;
+    height: 25dvh;
+    width: 60dvw;
+    flex: 1;
+    text-decoration: none;
+  }
+  #one {
+    background-image: url("doctor.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: black;
+  }
+  #two {
+    background-image: url("pharmarcy.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(71, 23, 243);
+  }
+  #three {
+    background-image: url("therapy.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(218, 21, 142);
+  }
+  #four {
+    background-image: url("ambulance.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(218, 21, 142);
+  }
+  .div p {
+    position: absolute;
+    top: 150px;
+  }
+  #contacts {
+    position: relative;
+    height: 110dvh;
+    width: 95dvw;
+    border-radius: 10px;
+    background-color: #62d0e4;
+  }
+  .form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  .firstish {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    top: -10px;
+    padding: 20px;
+    height: 45dvh;
+    width: 80dvw;
+    border-radius: 5px;
+    background-color: rgb(191, 207, 221);
+  }
+  .your-name {
+    height: 10%;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    border: none;
+  }
+  .your-email {
+    height: 10%;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    border: none;
+    left: 50px;
+  }
+  .area {
+    height: 30%;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    border: none;
+  }
+  .btn {
+    height: 10%;
+    border-radius: 10px;
+    width: 40%;
+    padding: 10px;
+    border: none;
+    left: 100px;
+    top: 380px;
+    background-color: yellow;
+  }
+
+  .secondish {
+    position: absolute;
+    top: 430px;
+    border-radius: 5px;
+    height: 45dvh;
+    width: 90dvw;
+    background-color: rgb(39, 204, 216);
+    display: flex;
+  }
+  .secondish h2 {
+    position: absolute;
+    left: 20px;
+    font-size: 2em;
+  }
+
+  .social {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 15dvh;
+    padding: 20px;
+    top: 70px;
+    position: absolute;
+  }
+  #youtube,
+  #facebook,
+  #tiktok,
+  #telegram {
+    font-size: 2em;
+  }
+  .social2 {
+    position: absolute;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    font-size: 1.5em;
+    justify-content: space-between;
+    height: 10dvh;
+    width: 70dvw;
+    top: 240px;
+  }
+
+  .footer {
+    height: 20dvh;
+    background-color: aliceblue;
+    display: flex;
+    position: relative;
+    top: 50px;
+  }
+  .copy {
+    position: absolute;
+    left: 25dvw;
+    top: 100px;
+    font-size: 1.3rem;
+  }
+  .author {
+    position: absolute;
+    top: 130px;
+    left: 16dvw;
+    font-size: 1.3rem;
+  }
+  .footer-legal {
+    position: absolute;
+    top: 0px;
+    left: 20dvw;
+    font-size: 1.1rem;
+  }
+  .footer-newsletter {
+    position: absolute;
+    top: 40px;
+    left: 25dvw;
+    font-size: 1.1rem;
+  }
+  .footer-sitemap {
+    position: absolute;
+    top: 70px;
+    left: 40dvw;
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 780px) {
+  body {
+    background-color: aqua;
+    font-size: 400;
+    width: 100dvw;
+    position: relative;
+  }
+  .header {
+    width: 100dvw;
+    position: relative;
+    background-color: rgb(89, 207, 223);
+    height: 100px;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    position: absolute;
+    height: 100%;
+    width: 15%;
+    background-image: url("logo.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-decoration: none;
+  }
+  .links {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    text-decoration: none;
+    left: 120px;
+    font-size: 1.1em;
+    font-weight: 600;
+    flex: 1;
+    gap: 20px;
+    padding: 10px;
+  }
+  .links a {
+    text-decoration: none;
+  }
+  .dropdown {
+    display: none;
+  }
+  .about {
+    height: 100dvh;
+
+    width: 100dvw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .about h2 {
+    position: absolute;
+    font-size: 1.4em;
+  }
+  .about img {
+    height: 35%;
+    width: 50%;
+    top: 80px;
+    left: 80px;
+    position: absolute;
+  }
+  .about p {
+    position: absolute;
+    top: 400px;
+    font-weight: 400;
+    width: 80%;
+    height: 200px;
+    font-size: 1.5em;
+  }
+  .dropb {
+    position: fixed;
+    height: 30%;
+    background-color: rgb(189, 204, 54);
+    width: 25%;
+    left: 70%;
+    border-radius: 5px;
+    top: 200px;
+    display: block;
+    padding: 10px;
+    z-index: 1000;
+  }
+  .text1 {
+    position: absolute;
+    min-height: 40px;
+    border-radius: 5px;
+    border: none;
+    left: 10%;
+    width: 80%;
+  }
+  .buttonsearch {
+    position: absolute;
+    top: 59px;
+    left: 33%;
+    border-radius: 20px;
+    border: none;
+    background-color: #619ddd;
+  }
+  .sblinks {
+    position: absolute;
+    top: 100px;
+    padding: 20%;
+  }
+  .portal {
+    position: absolute;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 600;
+    top: 0;
+    left: 60%;
+  }
+  .faq {
+    position: absolute;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 600;
+    top: 40px;
+    left: 80%;
+  }
+  .chat {
+    position: absolute;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 600;
+    top: 80px;
+    left: 40%;
+    height: 20px;
+    width: 20dvh;
+    display: inline;
+  }
+  .back {
+    position: absolute;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 600;
+    top: 130px;
+    left: 70%;
+  }
+  .products {
+    height: 170dvh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  #container {
+    height: 150dvh;
+
+    width: 95dvw;
+    position: absolute;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-decoration: none;
+    justify-content: space-around;
+    gap: 10px;
+    align-items: center;
+    color: black;
+    font-weight: 800;
+    font-size: 1.2em;
+  }
+  .div {
+    position: relative;
+    border-radius: 10px;
+    height: 60dvh;
+    width: 50dvw;
+    flex: 1;
+    text-decoration: none;
+    padding: 10px;
+    left: -60px;
+  }
+  #one {
+    background-image: url("doctor.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: black;
+  }
+  #two {
+    background-image: url("pharmarcy.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(71, 23, 243);
+  }
+  #three {
+    background-image: url("therapy.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(218, 21, 142);
+  }
+  #four {
+    background-image: url("ambulance.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(218, 21, 142);
+  }
+  .div p {
+    position: absolute;
+    top: 250px;
+  }
+  .blog-post {
+    width: 60dvw;
+    font-size: 1.5em;
+  }
+
+  #contacts {
+    position: relative;
+    height: 110dvh;
+    width: 95dvw;
+    border-radius: 10px;
+    background-color: #62d0e4;
+    padding: 10px;
+  }
+  #contacts .heading {
+    font-size: 1.2em;
+  }
+  #contacts .me {
+    color: blue;
+  }
+  .form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  .firstish {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    top: -10px;
+    padding: 20px;
+    height: 45dvh;
+    width: 80dvw;
+    border-radius: 5px;
+    background-color: rgb(191, 207, 221);
+  }
+  .your-name {
+    height: 10%;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    border: none;
+  }
+  .your-email {
+    height: 10%;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    border: none;
+    left: 50px;
+  }
+  .area {
+    height: 30%;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    border: none;
+  }
+  .btn {
+    height: 10%;
+    border-radius: 10px;
+    width: 40%;
+    padding: 10px;
+    border: none;
+    left: 100px;
+    top: 380px;
+    background-color: yellow;
+  }
+
+  .secondish {
+    position: absolute;
+    top: 430px;
+    border-radius: 5px;
+    height: 45dvh;
+    width: 90dvw;
+    background-color: rgb(39, 204, 216);
+    display: flex;
+  }
+  .secondish h2 {
+    position: absolute;
+    left: 20px;
+    font-size: 2em;
+  }
+
+  .social {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 15dvh;
+    padding: 20px;
+    top: 70px;
+    position: absolute;
+  }
+  #youtube,
+  #facebook,
+  #tiktok,
+  #telegram {
+    font-size: 2em;
+  }
+  .social2 {
+    position: absolute;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    font-size: 1.5em;
+    justify-content: space-between;
+    height: 10dvh;
+    width: 70dvw;
+    top: 240px;
+  }
+
+  .footer {
+    height: 20dvh;
+    width: 100dvw;
+    background-color: aliceblue;
+    display: flex;
+    position: relative;
+    top: 50px;
+    left: -5px;
+    font-size: 1.2em;
+    font-weight: 600;
+  }
+  .copy {
+    position: absolute;
+    left: 32%;
+    top: 100px;
+  }
+  .author {
+    position: absolute;
+    top: 130px;
+    left: 30%;
+  }
+  .footer-legal {
+    position: absolute;
+    top: 5px;
+    left: 30%;
+  }
+  .footer-newsletter {
+    position: absolute;
+    top: 40px;
+    left: 32%;
+  }
+  .footer-sitemap {
+    position: absolute;
+    top: 70px;
+    left: 40%;
+  }
+}
+@media (min-width: 781px) {
+  html{
+    scroll-behavior:smooth;
+    scroll-snap-type:y mandatory;
+
+  }
+  section{
+    scroll-snap-align: start;
+  }
+ 
+  body {
+    background-color: rgb(177, 236, 236);
+    font-size: 400;
+    font-family: poppins;
+    width: 100%;
+    position: relative;
+  }
+  .home {
+    height: 100dvh;
+
+    width: 100dvw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .header {
+    width: 99%;
+    position: relative;
+    background-color: rgb(222, 229, 230);
+    height: 25dvh;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+  }
+
+  .logo {
+    position: absolute;
+    height: 70%;
+    border-radius: 5px;
+    width: 10%;
+    background-image: url("logo.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-decoration: none;
+    top:2%;
+    left:1%
+  }
+  .WebName{
+    position:absolute;
+    top:60%;
+    font-weight:600 ;
+    left:0.5%
+  }
+  .contactInfo {
+    position: absolute;
+    top: 0%;
+    height: 50%;
+    width: 85%;
+    background: rgb(3, 37, 72);
+    background: linear-gradient(
+      90deg,
+      rgba(3, 37, 72, 1) 0%,
+      rgba(0, 132, 147, 1) 55%,
+      rgba(120, 224, 43, 1) 100%
+    );
+    left: 15%;
+    display: flex;
+    border-radius: 0 5px 0 0;
+
+    align-items: center;
+  }
+  .phoneNumber {
+    left: 1%;
+    position: absolute;
+    height: 50%;
+    width: 14%;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color:white;
+    transition: all 0.3s ease;
+  }
+  .phoneNumber a{
+    text-decoration: none;
+    color: #ddd;
+  }
+  .phoneNumber:hover{
+    transform: scale(1.1);
+  }
+  .email {
+    left: 20%;
+    position: absolute;
+    height: 50%;
+    width: 21%;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color:white;
+    transition: all 0.3s ease;
+  }
+  .email:hover{
+    transform: scale(1.1);
+  }
+
+  .email a{
+    text-decoration: none;
+    color: #ddd;
+  }
+  .facebook, .twitter, .LinkedIn{
+    position: absolute;
+    height: 68%;
+    width: 5%;
+    background-color: aqua;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+    cursor: pointer;
+  }
+  .facebook {
+    left: 71%;
+   
+  }
+  .twitter {
+    left: 80%;
+    
+  }
+  .LinkedIn {
+    left: 89%;
+    
+  }
+  .facebook:hover, .twitter:hover, .LinkedIn:hover{
+    color:rgb(9, 231, 202);
+    background-color: grey;
+  }
+  .facebook i, .twitter i, .LinkedIn i{
+transition:all 0.3s ease;
+  }
+  .facebook:hover i, .twitter:hover i, .LinkedIn:hover i{
+    transform: scale(1.3);
+  }
+
+  .links {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    text-decoration: none;
+    left: 28.5%;
+    height: 30%;
+    width: 70%;
+    font-size: 1.1em;
+    font-weight: 600;
+    flex: 1;
+    gap: 20px;
+    padding: 1%;
+    top: 60%;
+    background-color: transparent;
+  }
+  .portalCont{
+    position:absolute;
+    height:47%;
+    width: 55%;
+    top:60%;
+    right:5% ;
+
+  }
+  .portal2 {
+    height: 60%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 10%;
+    width: 20%;
+    top: 1%;
+    background: rgb(3, 37, 72);
+    background: linear-gradient(
+      90deg,
+      rgba(3, 37, 72, 1) 0%,
+      rgba(0, 132, 147, 1) 55%,
+      rgba(120, 224, 43, 1) 100%
+    );
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .portal2 p {
+    left: 5%;
+    color: rgb(236, 221, 221);
+    position: absolute;
+  }
+  .portalArrow {
+    position: absolute;
+    height: 90%;
+    width: 20%;
+    right: 25%;
+    border-radius: 50%;
+    background-color: #ddd;
+    transition: all 0.9s ease;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+ 
+  .portal2:hover .portalArrow {
+    transform: translateX(140%);
+    opacity: 0.4;
+  }
+
+  .links a {
+    text-decoration: none;
+    z-index: 1;
+  }
+  .links a:hover {
+    background: #121fcf;
+    background: linear-gradient(to right, #121fcf 0%, #cf1512 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .dropdown {
+    display: none;
+  }
+
+  .HeadersParagraph{
+    position:absolute;
+    height:65%;
+    width:58%;
+    background-color: transparent;
+    top:25%
+  }
+  .header1,.header2{
+    position: absolute;
+    font-size: 3em;
+
+  }
+  .header1{
+   left:2%;
+   top:-5%;
+   color: rgb(39, 33, 33);
+  }
+  .header2{
+left:2%;
+top:12%;
+color: #131868;
+  }
+  .paragraph{
+    position: absolute;
+    bottom:2%;
+    font-size: 1.3em;
+    left:2%;
+  }
+  .otherContainer{
+    position:absolute;
+    height:85%;
+    width:55%;
+    background-color: transparent;
+    right:-10%;
+    top:27%
+  }
+  .div1 ,.div2, .div3{
+position:absolute;
+  }
+  .div1{
+    background-color: #00a2fd;
+    height: 80%;
+    width:80%;
+    clip-path: ellipse(42% 50% at 50% 50%);
+    left:3%
+  }
+.div2{
+  background: rgb(0,6,142);
+  background: linear-gradient(90deg, rgba(0,6,142,1) 68%, rgba(12,156,237,1) 83%, rgba(0,162,253,1) 100%);
+    height: 80%;
+    width:80%;
+  clip-path: ellipse(42% 50% at 50% 50%);
+}
+.div3{
+  background-image: url("docImage3.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 95%;
+    width:53%;
+    clip-path: ellipse(100% 50% at 0% 50%);
+    border-radius: 30% 0 0 40%;
+    transform: rotate(90deg);
+    left:13%;
+    top:-5%
+}
+
+/* About section */
+.about{
+  height: 100dvh;
+    width: 100%;
+    background-color: aliceblue;
+    position: relative;
+    display: flex;
+}
+.about h1{
+  position:absolute;
+  font-size: 2.5em;
+  top:-2%;
+  left:1%;
+  color:hsl(240, 94%, 27%)
+
+}
+.aboutPhoto{
+  position:absolute;
+  height:50%;
+  width:30%;
+  left:2%;
+  top:30%;
+  background-image: url("Doc2About.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid grey;
+  border-radius: 10px;
+
+}
+.aboutParagraph{
+  position:absolute;
+  height:75%;
+  width:60%;
+  right:2%;
+  top:5%;
+  background-color: transparent;
+}
+ 
+/* Product section */
+
+  .products {
+    height: 100dvh;
+    width: 100%;
+    background-color: rgb(143, 198, 247);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .products h2{
+    font-size:2.5em;
+    position: absolute;
+    color:hsl(240, 94%, 27%);
+    top:-2%;
+    left:30%;
+  }
+  #container {
+    height: 84%;
+    background-color: transparent;
+    width: 95dvw;
+    position: relative; /* Changed from absolute to relative */
+    top: 13%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.oneDiv, .twoDiv, .threeDiv, .fourDiv {
+    flex: 1; /* Keep flex: 1 to allow flexible sizing */
+    height: 100%;
+    width: 70%; /* Or you could use flex-basis instead */
+    position: relative; /* Changed from absolute to relative */
+    margin: 5px; /* Optional: add some spacing between divs */
+    box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.75);
+border-radius: 10px;
+background-color: aliceblue;
+cursor: pointer;
+transition:all 0.3s ease
+  }
+  .oneDiv:hover, .twoDiv:hover, .threeDiv:hover, .fourDiv:hover{
+transform: scale(1.02);
+  }
+.div {
+  display: block; /* Ensure link takes full div space */
+  border-radius: 10px;
+  min-height: 50%;
+  min-width: 100%; /* Changed from 99% to 100% */
+  text-decoration: none;
+  padding: 10px;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+  #one {
+    background-image: url("doctor.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: black;
+    left: -25dvw;
+  }
+  #two {
+    background-image: url("pharmarcy.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(15, 15, 15);
+    left: 5dvw;
+    top: -38dvh;
+  }
+  #three {
+    background-image: url("therapy.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(27, 24, 26);
+    left: -25dvw;
+    top: -33dvh;
+  }
+  #four {
+    background-image: url("ambulance.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: rgb(19, 18, 18);
+    left: 5dvw;
+    top: -71dvh;
+  }
+  .div p {
+    position: absolute;
+    top: 40dvh;
+    font-weight: 800;
+    left: 1%;
+    color: #121fcf;
+  }
+  .DivParagraph{
+    position: absolute;
+    top:55%;
+    padding: 2px;
+  }
+
+
+
+  .blog {
+    padding: 10px;
+    width: 100dvw;
+    height: 100dvh;
+    background-color: rgb(238, 227, 210);
+  }
+  .blog h2{
+    position: absolute;
+    left:40%;
+    color: #090f69;
+    font-size: 2.5em;
+  }
+
+  #blog-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px;
+    top:20%;
+  }
+ 
+  .blog-post {
+    width: 42dvw;
+    
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 1px 3px 5px 0px rgba(0,0,0,0.75);
+transition: all 0.3s ease;
+cursor: pointer;
+  }
+  .blog-post:hover{
+    transform: scale(1.02);
+  }
+
+  .blog-post h3 {
+    margin-top: 0;
+  }
+
+  .blog-post a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  #contacts {
+    position: relative;
+    height: 110dvh;
+    width: 95dvw;
+    border-radius: 10px;
+    background-color: #62d0e4;
+    padding: 10px;
+  }
+  #contacts .heading {
+    font-size: 1.2em;
+  }
+  #contacts .me {
+    color: blue;
+  }
+  .form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  .firstish {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    top: -10px;
+    padding: 20px;
+    height: 45dvh;
+    width: 30dvw;
+    border-radius: 5px;
+    background-color: rgb(191, 207, 221);
+  }
+  .your-name {
+    height: 10%;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    border: none;
+  }
+  .your-email {
+    height: 10%;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    border: none;
+  }
+  .area {
+    height: 30%;
+    border-radius: 10px;
+    width: 90%;
+    padding: 10px;
+    border: none;
+  }
+  .btn {
+    height: 10%;
+    border-radius: 10px;
+    width: 40%;
+
+    border: none;
+    left: 10dvw;
+
+    background-color: yellow;
+  }
+
+
+  .footer {
+    height: 100dvh;
+    width: 100dvw;
+    background-color: rgb(1, 1, 2);
+    display: flex;
+    position: relative;
+    top: 15dvh;
+
+   
+  }
+
+  .footerContainer {
+    position: absolute;
+    left:0%;
+    top:0%;
+    height: 100%;
+    width:100%;
+  }
+  
+  .footerMap{
+    position: absolute;
+    height: 100%;
+    width:100%;
+   
+    opacity: 10;
+    background-image: url("worldMap1-removebg-preview.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(73, 67, 67, 0.5);  /* Adjust opacity as needed */
+    color:whitesmoke
+  }
+  .footerPartnership,.footerCompany,.footerFAQ{
+    position: absolute;
+    height:50%;
+    
+   
+  background-color: transparent;
+  top:40%;
+  border-radius: 5px;
+  backdrop-filter: blur(10px);
+  }
+  .footerPartnership{
+    left:1%;
+    width:30%;
+  }
+  .footerCompany{
+    left:37%;
+    width:20%;
+    
+  }
+  .footerCompany a{
+    color:#00a2fd;
+    text-decoration: none;
+  }
+  .footerFAQ{
+    left:63%;
+    width:30%;
+  }
+
+}
