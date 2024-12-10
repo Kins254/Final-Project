@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TELEMEDICINE-ACCOUNT</title>
+    <link rel="stylesheet" href="loggedIn.css" />
+    <!-- here, we are linking our css with the html-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- here, we are linking our google fonts with the html-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://kit.fontawesome.com/d510096626.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-brands/css/uicons-brands.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body id="blur">
+
+    <section class="admin">
+        <div class="Head">
+         <button class="Adminbutton" id="home">Home 
+      
+         </button>
+         <button class="Adminbutton" id="logout" onclick="logout()">
+          Log Out
+         </button>
+        </div>
+        <!-- menu header section -->
+        <div class="header">
+          <div class="Picture">
+            <i id="photo" class="fa-regular fa-user"></i>
+          </div>
+          <h3 class="greetings">Welcome, </h3>
+          <h3 id="username">User</h3>
+          <!--Menu section-->
+          <div class="container">
+          <div class="dashboard" onclick="toggleSlide('dashboardContent')"  >
+            <i id="dashboard" class="fa-solid fa-chart-line"></i>
+            <p>Dashboads</p>
+          </div>
+          <div class="patientsAdmin" onclick="toggleSlide('patientsContent')">
+            <i id="patientsAdmin" class="fa-solid fa-hospital-user"></i>
+            <p>Patients</p>
+          </div>
+          <div class="doctorsAdmin" onclick="toggleSlide('doctorContent')">
+            <i id="doctorsAdmin" class="fa-solid fa-user-doctor"></i>
+            <p>Doctors</p>
+          </div>
+          <div class="appointmentsAdmin" onclick="toggleSlide('appointmentContent')"><i id="appointmentsAdmin" class="fa-regular fa-calendar-check"></i>
+          <p>Appointments</p></div>
+          <div class="settings" onclick="toggleSettings()">
+            <i id="settings" class="fa-solid fa-gear" aria-label="Settings"></i>
+            <p>Settings</p>
+          </div>
+      
+          </div>
+      
+      
+      
+          
+        </div>
+      
+       <div class="TheContent">
+        <div class="slidingContent" id="dashboardContent">
+          <div class="graph" id="graph1"></div>
+          <div class="graph" id="graph2"></div>
+          <div class="graph" id="graph3"></div>
+          
+          <div class="list"></div>
+          <div class="list"></div>
+          <div class="list"></div>
+        </div>
+        <div class="slidingContent" id="patientsContent">
+          <form id="searchFormPat">
+            <input type="text" id="idFilterPat" placeholder="Search by ID" name="idFilterPat">
+            <input type="text" id="emailFilterPat" placeholder="Search by Email" name="emailFilterPat">
+            <input type="text" id="phoneFilterPat" placeholder="Search by Phone" name="phoneFilterPat">
+            <button type="button" id="Patbutton" onclick="AdminPatientsFetch()">Search</button>
+          </form>
+            
+          <table id="PatientsAdmin">
+            <thead id="TheadPatAdmin">
+              <tr id="mainRowPatAdmin">
+                <th>Patient ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Gender</th>
+                <th>Date Of Birth</th>
+                <th>Actions</th> <!-- For Edit/Delete -->
+              </tr>
+            </thead>
+            <tbody id="TbodyPatAdmin">
+              </tbody>
+          </table>
+        </div>
+        <div class="slidingContent" id="doctorContent">
+          <form id="searchFormDoc">
+            <input type="text" id="idFilterDoc" placeholder="Search by ID" name="idFilterDoc">
+            <input type="text" id="emailFilterDoc" placeholder="Search by Email" name="emailFilterDoc">
+            <input type="text" id="phoneFilterDoc" placeholder="Search by Phone" name="phoneFilterDoc">
+            <button type="button" id="Docbutton" onclick="AdminDoctorsFetch()">Search</button>
+          </form>
+          <button id="AddDoctor" onclick="ModalAddDoc()">Add A Doctor</button>
+          <table id="doctorAdmin">
+            <thead id="TheadDocAdmin">
+              <tr id="mainRowDocAdmin">
+                <th>Doctor ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Specialization</th>
+                <th>Schedule</th>
+                <th>Actions</th> <!-- For Edit/Delete -->
+              </tr>
+            </thead>
+            <tbody id="TbodyDocAdmin">
+              </tbody>
+          </table>
+        </div>
+        <div class="slidingContent" id="appointmentContent">
+          <form id="searchFormApp">
+            <input type="text" id="idFilterApp" placeholder="Search by ID" name="idFilterApp">
+            <input type="text" id="patientIdFilterApp" placeholder="Search by Patient ID" name="patientIdFilterApp">
+            <input type="text" id="doctorIdFilterApp" placeholder="Search by Doctor ID" name="doctorIdFilterApp">
+            <button type="button" id="Appbutton" onclick="AdminAppointmentFetch()">Search</button>
+          </form>
+          <table id="appointmentAdmin">
+            <thead id="TheadAdmin">
+              <tr id="mainRowAdmin">
+                <th>Appointment ID</th>
+                <th>Patient ID</th>
+                <th>Doctor ID</th>
+                <th>Appointment Date</th>
+                <th>Appointment Time</th>
+                <th>Appointment Type</th>
+                <th>Communication Type</th>
+                <th>Payment Type</th>
+                <th>Actions</th> <!-- For Edit/Delete -->
+              </tr>
+            </thead>
+            <tbody id="TbodyAppAdmin">
+              </tbody>
+          </table>
+        </div>
+        <div class="settingsContent">
+          <div class="PersonalInfoUpdate">
+            <i class="fa-solid fa-info"></i>
+            <p>Personal Info Update</p>
+          </div>
+      <div class="preferences">
+        <i class="fa-solid fa-sliders"></i>
+        <p>Preferences</p>
+      </div>
+      <div class="AccountManagement" onclick="ModalAdmin()">
+        <i class="fa-regular fa-user"></i>
+        <p>Account Management</p>
+      </div>
+      <div class="helpAndSupport">
+        <i class="fa-regular fa-circle-question"></i>
+        <p>Help And Support</p>
+      </div>
+        </div>
+      
+       </div>
+      
+      
+       <div class="TheContentPopup">
+      
+        <!--For adding doctors-->
+        <div class="AddingDoctor">
+          <div class="closeAddDoc" onclick="ModalAddDoc()">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+          <p>Add a Doctor</p>
+          <form class="DocAdding">
+            
+            <label for="name" class="name">NAME:</label>
+            <input type="text" id="name" name="name" placeholder="e.g., Erick Kinuthia" required>
+            
+            
+            <label for="email" class="email">EMAIL:</label>
+            <input type="email" id="email" name="email" placeholder="e.g., user@example.com" required>
+            <span class="error" id="emailError"></span>
+           
+            
+            <label for="phone" class="phone">PHONE:</label>
+            <input type="text" id="phone" name="phone" placeholder="eg., +254712345678" required>
+            <span class="error" id="phoneError"></span>
+      
+      
+            <label for="specialization" class="specialization2">Specialization:</label>
+             <select id="specialization" name="specialization" required>
+              <option value="" disabled selected>
+                Select specialization type
+              </option>
+              <option value="general">General</option>
+              <option value="dermatology">Dermatology</option>
+              <option value="emergency">Emergency</option>
+              <option value="pediatric">Pediatric</option>
+              <option value="nutrition">Nutrition and Dietetic</option>
+              <option value="infectious">Infectious Disease</option>
+             </select>
+           
+             <label for="schedule" class="schedule2">Schedule:</label>
+             <select id="schedule2" name="schedule" required>
+              <option value="" disabled selected>
+                Select schedule time
+              </option>
+              <option value="morning">Morning</option>
+              <option value="afternoon">Afternoon</option>
+              <option value="evening">Evening</option>
+              <option value="Available_On_Call">Available On Call</option>
+             </select>
+            
+            
+         
+      
+                <label for="passwordDoc" class="passwordDoc">PASSWORD:</label>
+                <input id="passwordDoc" type="password" name="passwordDoc" required>
+                <span class="error" id="passwordError"></span>
+      
+                <label for="confirmDoc" class="confirmDocAcc">CONFIRM PASSWORD:</label>
+                <input type="password" id="confirmDocAcc" name="confirmDocAcc" required>
+                <span class="error" id="confirmPasswordError"></span>
+            
+                <a href="#" for="terms" class="terms">
+                    
+                    I agree to the Terms and Conditions
+                </a>
+                <input type="checkbox" id="terms" name="terms"required >
+                <span class="error" id="termsError"></span>
+            
+                <button type="submit" class="sub">Submit</button>
+              
+          </form>
+        </div>
+      
+       </div>
+      
+        <div class="settingContentPopups">
+            <!-- Modal or a section for updating email and password -->
+      <div id="updateAccountAdmin" class="modalAdmin">
+        <div class="modal-contentAdmin">
+          <div class="closeAdmin" onclick="ModalAdmin()">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+          <h2>Update Account Information</h2>
+          <form id="updateAccountFormAdmin" >
+            <!-- email section-->
+            <div>
+              <label for="newEmailAdmin" class="newEmailAdmin">New Email:</label>
+              <input type="email" id="newEmailAdmin" placeholder="Enter new email" name="newEmailAdmin" required>
+            </div>
+            <span class="errorEditAdmin" id="emailEditAdmin"></span>
+            <!-- Current section-->
+            <div>
+              <label for="currentPasswordAdmin" class="currentPasswordAdmin">Current Password:</label>
+              <input type="password" id="currentPasswordAdmin" placeholder="Enter current password" name="currentPasswordAdmin" required>
+            </div>
+            <span class="errorEditAdmin" id="currentPasswordEditAdmin"></span>
+      
+            <!--New password-->
+            <div>
+              <label for="newPasswordAdmin" class="newPasswordAdmin">New Password:</label>
+              <input type="password" id="newPasswordAdmin" placeholder="Enter new password" name="newPasswordAdmin" required>
+            </div>
+            <span class="errorEditAdmin" id="newPasswordEditAdmin"></span>
+      <!-- confirm password-->
+            <div>
+              <label for="confirmPasswordAdmin" class="confirmPasswordAdmin">Confirm New Password:</label>
+              <input type="password" id="confirmPasswordAdmin" placeholder="Confirm new password" name="confirmPasswordAdmin" required>
+            </div>
+            <span class="errorEditAdmin" id="confirmPasswordEditAdmin"></span>
+      
+      <!-- submission button-->
+            <button type="submit" id="EditsubAdmin">Update Account</button>
+          </form>
+        </div>
+      </div>
+        </div>
+      
+      
+      
+      </section>
+        
+     
+
+  </body>
+  </html>

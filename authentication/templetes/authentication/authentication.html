@@ -1,0 +1,114 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOGIN/SIGNUP</title>
+    <link rel="stylesheet" href="{% static 'CSS/authentication.css' %}">
+    
+    <!-- here, we are linking our css with the html-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- here, we are linking our google fonts with the html-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://kit.fontawesome.com/d510096626.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.4.2/uicons-brands/css/uicons-brands.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+ <body>
+  <div class="container">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="thecard" id="thecard">
+        <div class="front">
+            <h2>LOG IN</h2>
+            <form class="frontform" id="loginForm">
+
+              <label for="userType" class="userType">User Type:</label>
+        <select id="userType" name="userType" required>
+            <option value="patients">Patient</option>
+            <option value="doctors">Doctor</option>
+            <option value="admin">Admin</option>
+        </select>
+             <label for="email" class="email">Enter email:</label>
+           <input type="email" id="email" name="email" required>
+         
+           <label for="password" class="password">Enter Password:</label>
+           <input type="password" id="password" name="password" required>
+           <button class="login">LOG IN</button>
+            </form>
+            <a href="#" class="dont" id="buttonz" onclick="toggle()">Don't have an account? Create Today</a>
+             </div>
+
+             <div class="back">
+                <h2>CREATE AN ACCOUNT</h2>
+          <form class="form" id="myForm">
+            <label for="name" class="name">NAME:</label>
+        <input type="text" id="name" name="name" placeholder="e.g., Erick Kinuthia" required>
+        
+        
+        <label for="email" class="email1">EMAIL:</label>
+        <input type="email" id="email1" name="email" placeholder="e.g., user@example.com" required>
+        <span class="error" id="emailError"></span>
+       
+        
+        <label for="phone" class="phone">PHONE:</label>
+        <input type="text" id="phone" name="phone" placeholder="eg., +254712345678" required>
+        <span class="error" id="phoneError"></span>
+
+        <label for="address" class="address">ADDRESS:</label>
+        <input type="text" id="address" name="address" placeholder="eg., 902-192 KIKUYU" required>
+       
+
+        <p class="Gh2">GENDER:</p>
+        <label for="male" class="male">MALE</label>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="female" class="female">FEMALE</label>
+        <input type="radio" id="female" name="gender" value="female"> 
+        <span class="error" id="genderError"></span>
+        
+        <label for="date_of_birth" class="date_of_birth">DATE OF BIRTH:</label>
+            <input type="date" id="date_of_birth" name="date_of_birth" required>
+
+            <label for="password1" class="password1">PASSWORD:</label>
+            <input id="password1" type="password" name="password1" required>
+            <span class="error" id="passwordError"></span>
+
+            <label for="confirm" class="confirm">CONFIRM PASSWORD:</label>
+            <input type="password" id="confirm" required>
+            <span class="error" id="confirmPasswordError"></span>
+        
+            <a href="#" for="terms" class="terms">
+                
+                I agree to the Terms and Conditions
+            </a>
+            <input type="checkbox" id="terms" name="terms"required >
+            <span class="error" id="termsError"></span>
+        
+            <button type="submit" class="sub">Submit</button>
+          </form>
+          <a href="#" class="have" id="buttonz" onclick="toggleback()">Have an account? Log in</a>
+            </div>
+
+    </div>
+    
+   
+  </div>
+
+  <script src="{% static 'JS/authentication.js' %}" defer></script>
+  
+
+
+ </body>
+
+</html>
