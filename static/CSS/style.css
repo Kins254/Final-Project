@@ -697,20 +697,19 @@
     align-items: center;
     border-radius: 5px;
   }
-
   .logo {
     position: absolute;
     height: 70%;
     border-radius: 5px;
     width: 10%;
-    background-image: url("logo.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     text-decoration: none;
-    top:2%;
-    left:1%
+    top: 2%;
+    left: 1%;
   }
+  
   .WebName{
     position:absolute;
     top:60%;
@@ -945,7 +944,6 @@ position:absolute;
   clip-path: ellipse(42% 50% at 50% 50%);
 }
 .div3{
-  background-image: url("docImage3.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1007,6 +1005,7 @@ position:absolute;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
   }
   .products h2{
     font-size:2.5em;
@@ -1017,10 +1016,11 @@ position:absolute;
   }
   #container {
     height: 84%;
-    background-color: transparent;
+    background-color:transparent;
     width: 95dvw;
     position: relative; /* Changed from absolute to relative */
     top: 13%;
+    left: 2% !important;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -1055,7 +1055,7 @@ transform: scale(1.02);
   box-sizing: border-box; /* Include padding in width calculation */
 }
   #one {
-    background-image: url("doctor.jpg");
+   
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1063,7 +1063,6 @@ transform: scale(1.02);
     left: -25dvw;
   }
   #two {
-    background-image: url("pharmarcy.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1072,7 +1071,6 @@ transform: scale(1.02);
     top: -38dvh;
   }
   #three {
-    background-image: url("therapy.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1081,7 +1079,6 @@ transform: scale(1.02);
     top: -33dvh;
   }
   #four {
-    background-image: url("ambulance.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1242,7 +1239,6 @@ cursor: pointer;
     width:100%;
    
     opacity: 10;
-    background-image: url("worldMap1-removebg-preview.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

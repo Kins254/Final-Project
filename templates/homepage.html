@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TeleHealthConnect</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}" />
     <!-- here, we are linking our css with the html-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <!-- here, we are linking our google fonts with the html-->
@@ -26,7 +27,9 @@
   <body>
     <section class="home" id="home">
 <div class="header" id="header">
-  <div class="logo"></div>
+  <div class="logo" style="background-image: url('{% static "Images/logo.png" %}');">
+   <!--<img src="{% static '/Images/logo.png' %}">--> 
+  </div>
     <p class="WebName">TeleHealthConnect</p>
     <div class="contactInfo">
       <div class="phoneNumber" >
@@ -87,13 +90,13 @@
        <div class="otherContainer">
         <div class="div1"> </div>
         <div class="div2"></div>
-        <div class="div3"></div>
+        <div class="div3" style="background-image: url('{% static "Images/docImage3.jpg" %}');"></div>
        </div>
      
     </section>
 <section class="about" id="about">
   <h1>ABOUT US</h1>
-<div class="aboutPhoto"></div>
+<div class="aboutPhoto" style="background-image: url('{% static "Images/Doc2About.png" %}');"></div>
 <div class="aboutParagraph">
   <h3>Redefining Healthcare, One Consultation at a Time.</h3>
   <p> At TeleHealthConnect, we believe in making quality healthcare accessible to everyone. Our telemedicine platform connects you with experienced healthcare providers from the comfort of your home. With just a few clicks, you can consult with doctors, specialists, and mental health professionals, receive expert diagnoses, and get personalized treatment plans.</p>
@@ -126,7 +129,7 @@
       <div id="container">
 
         <div class="oneDiv"> 
-           <a href="#" target="_blank" id="one" class="div"> 
+           <a href="#" target="_blank" id="one" class="div" style="background-image: url('{% static "Images/doctor.jpg" %}');"> 
           <div >
             <p>DOCTOR CONSULTATION</p>
           </div>
@@ -134,7 +137,7 @@
         <p class="DivParagraph">Access quality healthcare from anywhere, anytime. Our telemedicine platform connects you with top doctors for expert consultations, diagnoses, and personalized treatment plans.</p>
       </div>
         <div class="twoDiv">
-          <a href="#" id="two" class="div" target="_blank">
+          <a href="#" id="two" class="div" target="_blank" style="background-image: url('{% static "Images/pharmarcy.jpg" %}');">
             <div >
               <p>PHARMARCY</p>
             </div>
@@ -144,7 +147,7 @@
           </div>
         </div>
         <div class="threeDiv">
-          <a href="#" id="three" class="div" target="_blank">
+          <a href="#" id="three" class="div" target="_blank" style="background-image: url('{% static "Images/therapy.jpg" %}');">
             <div >
               <p>THERAPY</p>
             </div>
@@ -154,7 +157,7 @@
           </div>
         </div>
         <div class="fourDiv"> 
-          <a href="#" id="four" class="div" target="_blank">
+          <a href="#" id="four" class="div" target="_blank" style="background-image: url('{% static "Images/ambulance.jpg" %}');">
             <div >
               <p>URGENT CARE</p>
             </div>
@@ -206,7 +209,7 @@
 
     <section class="footer">
       <div class="footerContainer">
-        <div class="footerMap"> 
+        <div class="footerMap" style="background-image: url('{% static "Images/worldMap1-removebg-preview.png" %}');"> 
 
         </div>
         <div class="overlay">

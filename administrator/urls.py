@@ -1,7 +1,6 @@
-# administrator/urls.py
 from django.urls import path
-from . import views  # Make sure you have views set up
+from . import views
 
 urlpatterns = [
-    path('', views.home, name='admin_home'),  # Replace with your actual views
+    path('hello/',views.say_hello)
 ]
