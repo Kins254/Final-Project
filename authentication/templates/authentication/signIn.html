@@ -32,8 +32,8 @@
     <div class="thecard" id="thecard">
         <div class="front">
             <h2>LOG IN</h2>
-            <form class="frontform" id="loginForm">
-
+            <form class="frontform" id="loginForm" method="POST">
+              {% csrf_token %}
               <label for="userType" class="userType">User Type:</label>
         <select id="userType" name="userType" required>
             <option value="patients">Patient</option>

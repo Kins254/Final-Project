@@ -119,7 +119,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
       
       console.log('Sending data:', data);  // Log the data being sent
   
-      fetch('http://localhost:3000/register', {
+      fetch('http://localhost:8000/signIn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -146,6 +146,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
     }
   });
   
+  /*
   // JavaScript code for handling the login process
   document.getElementById('loginForm').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the form from submitting normally
@@ -157,7 +158,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
     console.log('data recieved:',userType,enteredEmail,enteredPassword);
   
     // Send a POST request to the server with the user type, email, and password
-        fetch('http://localhost:3000/login', {
+        fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -187,5 +188,60 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
         });
     });
     console.log(sessionStorage.getItem('userType'));
+
+
+ */
+
+
+  // JavaScript code for handling the login process
+  document.getElementById('loginForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    const userType = document.getElementById('userType').value;
+    const enteredEmail = document.getElementById('email').value;
+    const enteredPassword = document.getElementById('password').value;
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    console.log('Attempting to login with:', { userType, enteredEmail });
+
+    // Send a POST request to the Django server
+    fetch('http://127.0.0.1:8000/authentication/signIn/', {
+        method: 'POST', // Ensure the method is POST
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken, // Include CSRF token
+        },
+        body: JSON.stringify({
+            userType,
+            email: enteredEmail,
+            password: enteredPassword
+        }), // Send the data as JSON
+    })
+        .then(response => {
+            console.log('Response status:', response.status);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.redirect_url) {
+                // Redirect the user to the appropriate page
+                console.log('Redirecting to:', data.redirect_url);
+                window.location.href = data.redirect_url;
+            } else if (data.error) {
+                // Display error message from server
+                console.error('Server error:', data.error);
+                alert(data.error);
+            } else {
+                console.warn('Unexpected response:', data);
+                alert('Unexpected response. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        });
+});
 
     

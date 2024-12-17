@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views
+from patients import views  # Replace with your app name
 
 urlpatterns = [
-    path('patient/',views.say_patient)
+    path('patients/', views.patients, name='patients'), 
+    path('dashboard/',views.dashboard,name='dashboard'),
+    # ... other URL patterns
 ]

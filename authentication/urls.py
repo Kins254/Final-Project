@@ -1,6 +1,10 @@
 from django.urls import path
-from . import views
+from authentication import views  # Replace with your app name
 
-#urlpatterns = [
- #   path()
-#]
+urlpatterns = [
+    path('signIn/', views.signIn, name='sign_in'), 
+    # path('login/', views.login, name='login'),
+    # ... other URL patterns
+]
+
+

@@ -25,7 +25,7 @@ urlpatterns = [
     path('patients/', include('patients.urls')),  # Patients app URLs
     path('doctors/', include('doctors.urls')),    # Doctors app URLs
     path('administrator/', include('administrator.urls')),  # Administrators app URLs
-   # path('FinalProject/',include('FinalProject.urls')),
+    path('authentication/',include('authentication.urls')),# Authentication app urls
 ]
 
 
