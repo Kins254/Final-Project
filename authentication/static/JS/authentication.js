@@ -103,6 +103,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
       document.getElementById("termsError").textContent = "You must agree to the Terms and Conditions.";
       isValid = false;
     }
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
   
     // If the form is valid, send the registration data to the server
     if (isValid) {
@@ -119,10 +120,11 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
       
       console.log('Sending data:', data);  // Log the data being sent
   
-      fetch('http://localhost:8000/signIn', {
+      fetch('http://127.0.0.1:8000/authentication/signUp/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
         },
         body: JSON.stringify(data),
       })
@@ -146,52 +148,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
     }
   });
   
-  /*
-  // JavaScript code for handling the login process
-  document.getElementById('loginForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent the form from submitting normally
   
-    // Get the input values from the form
-    const userType = document.getElementById('userType').value;
-    const enteredEmail = document.getElementById('email').value;
-    const enteredPassword = document.getElementById('password').value;
-    console.log('data recieved:',userType,enteredEmail,enteredPassword);
-  
-    // Send a POST request to the server with the user type, email, and password
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userType, email: enteredEmail, password_hash: enteredPassword }),
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            // Store user data in sessionStorage
-            sessionStorage.setItem('userId', data.user_id);  // Unified ID
-            sessionStorage.setItem('firstName', data.first_name);
-            sessionStorage.setItem('userType', data.userType);
-
-            console.log("Login successful");
-    // Redirect to another page
-    window.location.href = 'loggedIn.html';
-}
-
-           else {
-                alert('Invalid email or password. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again later.');
-        });
-    });
-    console.log(sessionStorage.getItem('userType'));
-
-
- */
-
 
   // JavaScript code for handling the login process
   document.getElementById('loginForm').addEventListener('submit', function (event) {

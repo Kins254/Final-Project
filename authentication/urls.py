@@ -3,7 +3,7 @@ from authentication import views  # Replace with your app name
 
 urlpatterns = [
     path('signIn/', views.signIn, name='sign_in'), 
-    # path('login/', views.login, name='login'),
+     path('signUp/', views.signUp, name='signUp'),
     # ... other URL patterns
 ]
 

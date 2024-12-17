@@ -53,6 +53,7 @@
              <div class="back">
                 <h2>CREATE AN ACCOUNT</h2>
           <form class="form" id="myForm">
+            {% csrf_token %}
             <label for="name" class="name">NAME:</label>
         <input type="text" id="name" name="name" placeholder="e.g., Erick Kinuthia" required>
         
