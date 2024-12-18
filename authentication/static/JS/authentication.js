@@ -118,7 +118,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
         password
       };
       
-      console.log('Sending data:', data);  // Log the data being sent
+      
   
       fetch('http://127.0.0.1:8000/authentication/signUp/', {
         method: 'POST',
@@ -129,11 +129,11 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
         body: JSON.stringify(data),
       })
         .then(response => {
-          console.log('Response status:', response.status);
+          
           return response.json();
         })
         .then(data => {
-          console.log('Response data:', data);
+          
           if (data.success) {
             alert('Registration successful! You can now log in.');
             toggleback(); // Call the function to toggle back to the login card
@@ -159,7 +159,7 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
     const enteredPassword = document.getElementById('password').value;
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-    console.log('Attempting to login with:', { userType, enteredEmail });
+   
 
     // Send a POST request to the Django server
     fetch('http://127.0.0.1:8000/authentication/signIn/', {
@@ -175,25 +175,53 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
         }), // Send the data as JSON
     })
         .then(response => {
-            console.log('Response status:', response.status);
+           
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
         })
         .then(data => {
-            if (data.redirect_url) {
-                // Redirect the user to the appropriate page
-                console.log('Redirecting to:', data.redirect_url);
-                window.location.href = data.redirect_url;
-            } else if (data.error) {
-                // Display error message from server
-                console.error('Server error:', data.error);
-                alert(data.error);
-            } else {
-                console.warn('Unexpected response:', data);
-                alert('Unexpected response. Please try again.');
+          console.log('Response data:', data);
+          
+          if (data.success) {
+            // Determine which script to redirect to based on user type
+            let redirectScript;
+            switch(data.user_type) {
+              case 'patients':
+                redirectScript = '/static/JS/patients.js';
+                break;
+              case 'doctors':
+                redirectScript = '/static/JS/doctors.js';
+                break;
+              case 'admin':
+                redirectScript = '/static/JS/administrator.js';
+                break;
+              default:
+                alert('Unknown user type');
+                return;
             }
+        
+            // Create a script element to load the appropriate session script
+            const script = document.createElement('script');
+            script.src = redirectScript;
+            script.onload = () => {
+              // If the script has a function to handle the session, call it
+              if (window.handleUserSession) {
+                window.handleUserSession(data);
+              }
+              
+              // Redirect to the appropriate dashboard
+              if (data.redirect_url) {
+                window.location.href = data.redirect_url;
+              }
+            };
+            
+            // Append the script to the document
+            document.body.appendChild(script);
+          } else {
+            alert(data.error || 'Login failed. Please try again.');
+          }
         })
         .catch(error => {
             console.error('Error:', error);

@@ -1,15 +1,56 @@
 //setting the admin_id
-const userType2 = sessionStorage.getItem('userType');
-console.log("Type In admin section:", userType2);
+const sessionData = document.getElementById('session-data');
+const userType = sessionData.dataset.userType;
+let admin_id = null;
+let first_name = null;
 
-let admin_id = null; // Declare admin_id once with let
+if(userType==="admin"){
+  admin_id = sessionData.dataset.adminId;
+   first_name = sessionData.dataset.firstName;
 
-if (userType2 === "admin") {
-  admin_id = sessionStorage.getItem('userId'); // Update the existing admin_id
-  sessionStorage.setItem('adminId', admin_id); // Store admin_id in sessionStorage
+
+}
+else{
+  admin_id = null;
+   first_name = null;
 }
 
-console.log("The admin section admin's ID is: ", admin_id);
+console.log("Type In patient section:", userType);
+console.log("Admin Id:", admin_id);
+console.log("Admin's First name:", first_name);
+
+
+///Header greetings
+ // Function to get the current greeting based on time
+ function getGreeting() {
+  const currentHour = new Date().getHours();
+  let greeting;
+
+  if (currentHour >= 5 && currentHour < 12) {
+      greeting = "Good morning";
+  } else if (currentHour >= 12 && currentHour < 18) {
+      greeting = "Good afternoon";
+  } else {
+      greeting = "Good evening";
+  }
+
+  return greeting;
+}
+
+const greetingsElement=document.getElementById('greetingsPat');
+greetingsElement.textContent= `${getGreeting()}`
+
+const usernames=document.getElementById('usernamePat');
+const username1= first_name;
+
+if (username1) {
+  usernames.textContent = ` ${username1}!`;
+} else {
+  usernames.textContent = `Guest!`; // Fallback if no name is stored
+}
+
+
+
 
 //fetching the patients data
 async function AdminPatientsFetch() {

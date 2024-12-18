@@ -1,15 +1,71 @@
 //setting the patient_id
-const userType = sessionStorage.getItem('userType');
-console.log("Type In patient section:", userType);
+const sessionData = document.getElementById('session-data');
+const userType = sessionData.dataset.userType;
+let patient_id = null;
+let first_name = null;
 
-let patient_id = null; // Declare patient_id once with let
+if(userType==="patients"){
+   patient_id = sessionData.dataset.patientId;
+   first_name = sessionData.dataset.firstName;
 
-if (userType === "patients") {
-  patient_id = sessionStorage.getItem('userId'); // Update the existing patient_id
-  sessionStorage.setItem('patientId', patient_id); // Store patient_id in sessionStorage
+
+}
+else{
+   patient_id = null;
+   first_name = null;
 }
 
-console.log("The patient section patient's ID is: ",patient_id);
+console.log("Type In patient section:", userType);
+console.log("Patient Id:", patient_id);
+console.log("Patient's First name:", first_name);
+/*
+window.handleUserSession = function(userData) {
+  // Store patient-specific session information
+  sessionStorage.setItem('userId', userData.user_id);
+  sessionStorage.setItem('userType', userData.user_type);
+  sessionStorage.setItem('email', userData.email);
+  sessionStorage.setItem('firstName', userData.first_name);
+  sessionStorage.setItem('lastName', userData.last_name);
+  console.log(`patient id is {userId}`)
+
+  const patient_id = sessionStorage.getItem('userId');
+  //const patient_id = 2;
+  const first_name = sessionStorage.getItem('firstName');
+  console.log(`Patient ID is ${patient_id}`);
+  console.log(`Patient first name is ${first_name}`);
+  // Additional patient-specific session handling
+  console.log('Patient session initialized');
+}
+  */
+///Header greetings
+ // Function to get the current greeting based on time
+ function getGreeting() {
+  const currentHour = new Date().getHours();
+  let greeting;
+
+  if (currentHour >= 5 && currentHour < 12) {
+      greeting = "Good morning";
+  } else if (currentHour >= 12 && currentHour < 18) {
+      greeting = "Good afternoon";
+  } else {
+      greeting = "Good evening";
+  }
+
+  return greeting;
+}
+
+const greetingsElement=document.getElementById('greetingsPat');
+greetingsElement.textContent= `${getGreeting()}`
+
+const usernames=document.getElementById('usernamePat');
+const username1= first_name;
+
+if (username1) {
+  usernames.textContent = ` ${username1}!`;
+} else {
+  usernames.textContent = `Guest!`; // Fallback if no name is stored
+}
+
 
 //function to book an appointment
 document.getElementById("appointmentForm").addEventListener("submit", function (event) {

@@ -1,18 +1,23 @@
 //setting the doctor_id
-const userType1 = sessionStorage.getItem('userType');
-console.log("Type In doctor section:", userType1);
+const sessionData = document.getElementById('session-data');
+const userType = sessionData.dataset.userType;
+let doctor_id = null;
+let first_name = null;
 
-let doctor_id = null; // Declare doctor_id once with let
+if(userType==="doctors"){
+   doctor_id = sessionData.dataset.doctorId;
+   first_name = sessionData.dataset.firstName;
 
-if (userType1 === "doctors") {
-  doctor_id = sessionStorage.getItem('userId'); // Update the existing doctor_id
-  sessionStorage.setItem('doctorId', doctor_id); // Store doctor_id in sessionStorage
+
+}
+else{
+  doctor_id = null;
+   first_name = null;
 }
 
-console.log("The doctor section Doctor's ID is: ", doctor_id);
-
-
-
+console.log("User Type:", userType);
+console.log("Doctor's Id:", doctor_id);
+console.log("Doctor's First name:", first_name);
 ///function to edit the account details
 // Function to edit account details
 document.getElementById("updateAccountFormDoc").addEventListener("submit", function (event) {

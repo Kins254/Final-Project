@@ -26,7 +26,11 @@
   </head>
 
   <body id="blur">
-
+    <div id="session-data"
+    data-doctor-id="{{ request.session.user_id }}"
+    data-user-type="{{ request.session.user_type }}"
+    data-first-name="{{ request.session.first_name }}">
+</div>
     <!--doctor section-->
    
    <section class="doctor">
