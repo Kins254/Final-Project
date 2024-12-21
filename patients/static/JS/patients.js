@@ -117,13 +117,12 @@ document.getElementById("appointmentForm").addEventListener("submit", function (
 
 
 
- /*
+ 
 async function fetchAppointments() {
   try {
    
-    const response = await fetch(`http://localhost:8000/view_appointment/${patient_id}/`);
+    const response = await fetch(`http://localhost:8000/patients/view_appointment/${patient_id}/`);
     const appointments = await response.json();
-    console.log("Appointment Data:", appointments);
     const tbody = document.getElementById("Tbody");
     tbody.innerHTML = ""; // Clear existing rows
     appointments.forEach((appointment) => {
@@ -152,7 +151,6 @@ async function fetchAppointments() {
 
 // Call the fetchAppointments function when the DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Page loaded. Calling fetchAppointments.");
   fetchAppointments();
 });
 
@@ -177,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
       blur2.classList.add('active');
     }
   }
-  */
+  
 
 // Function to handle updating the appointment
 
@@ -207,7 +205,7 @@ document.getElementById("AppointmentEditForm").addEventListener("submit", functi
   console.log("Sending data:", formDataEdit);
 
   // Use the stored `currentAppointmentId` in the URL
-  fetch(`http://localhost:3000/appointments/${currentPatAppointmentId}`, {
+  fetch(`http://127.0.0.1:8000/patients/updating_appointment/${currentPatAppointmentId}/`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -228,9 +226,9 @@ document.getElementById("AppointmentEditForm").addEventListener("submit", functi
     });
 });
 
-//Function to delete appointments
-let deletePatAppointmentId = null;
 
+//Appointment Deleting function
+let deletePatAppointmentId = null;
 function deleteAppointmentPat(id) {
   deletePatAppointmentId = id;
   console.log("Delete Button appointment Id:", deletePatAppointmentId);
@@ -238,36 +236,45 @@ function deleteAppointmentPat(id) {
   // Show confirmation dialog
   const isConfirmed = confirm("Are you sure you want to delete this appointment?");
   
-  // If user clicks Cancel, return early and do nothing
+  // If user clicks Cancel, return early
   if (!isConfirmed) {
-    return;
+      return;
   }
 
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
   // If user clicks OK, proceed with deletion
-  fetch("http://localhost:3000/delete/patient/appointment", {
-    method: "DELETE",
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ id: deletePatAppointmentId })
+  fetch("http://127.0.0.1:8000/patients/delete_appointment/", {
+      method: "DELETE",
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken
+      },
+      credentials: 'include',
+      body: JSON.stringify({ id: deletePatAppointmentId })
   })
   .then(response => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return response.json();
+      if (!response.ok) {
+          return response.text().then(text => {
+              console.error('Server response:', text);
+              throw new Error(`HTTP error! status: ${response.status}`);
+          });
+      }
+      return response.json();
   })
   .then(data => {
-    console.log("Data fetched is:", data);
-    // Show success message
-    alert("Appointment deleted successfully!");
-    // Refresh the appointments list
-    fetchAppointments();
+      if (data.success) {
+          console.log("Data fetched:", data);
+          alert("Appointment deleted successfully!");
+          // Refresh the appointments list
+          fetchAppointments();
+      } else {
+          throw new Error(data.error || "Failed to delete appointment");
+      }
   })
   .catch(error => {
-    console.error("Fetching error:", error);
-    // Show error message
-    alert("Failed to delete appointment. Please try again.");
+      console.error("Error:", error);
+      alert("Failed to delete appointment. Please try again.");
   });
 }
 
@@ -530,7 +537,7 @@ function toggleSlidePat(contentIdPat) {
   contentPat.classList.toggle('active');
 
   // Close settings if it's open
-  const settingsContentPat = document.querySelector('.settingsContent');
+  const settingsContentPat = document.querySelector('.settingsPatContent');
   settingsContentPat.classList.remove('active');
 }
 

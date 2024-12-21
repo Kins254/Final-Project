@@ -117,7 +117,7 @@ def book_appointment(request):
 #Viewing An appointment section
 # patients/views.py
 
-'''
+
 def view_appointment(request, patient_id):
     try:
         # Fetch appointments for the patient
@@ -140,5 +140,130 @@ def view_appointment(request, patient_id):
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)
 
-'''
+
+#For Updating appointments
+@csrf_exempt
+@require_http_methods(["PUT", "PATCH"])
+def updating_appointment(request, appointment_id):
+    
+    try:
+        # Parse JSON data from request body
+        data = json.loads(request.body)
+        
+        # Retrieve the appointment
+        try:
+            appointment = Appointment.objects.get(id=appointment_id)
+        except Appointment.DoesNotExist:
+            logger.warning(f"Appointment {appointment_id} not found")
+            return JsonResponse({
+                'success': False,
+                'error': 'Appointment not found'
+            }, status=404)
+
+        # Update appointment fields if provided in the request
+        if 'appointment_type' in data:
+            appointment.appointment_type = data['appointment_type']
+        if 'doctor_id' in data:
+            appointment.doctor_id = data['doctor_id']
+        if 'appointment_date' in data:
+            appointment.appointment_date = data['appointment_date']
+        if 'appointment_time' in data:
+            appointment.appointment_time = data['appointment_time']
+        if 'communication_type' in data:
+            appointment.communication_type = data['communication_type']
+        if 'payment_type' in data:
+            appointment.payment_type = data['payment_type']
+
+        # Save the updated appointment
+        try:
+            with transaction.atomic():
+                appointment.save()
+                logger.info(f"Appointment {appointment_id} updated successfully")
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Appointment updated successfully',
+                    'appointment_id': appointment_id
+                })
+        except Exception as e:
+            logger.error(f"Error saving updated appointment: {str(e)}")
+            return JsonResponse({
+                'success': False,
+                'error': 'Failed to save appointment updates'
+            }, status=500)
+
+    except json.JSONDecodeError:
+        logger.error("Invalid JSON in request body")
+        return JsonResponse({
+            'success': False,
+            'error': 'Invalid request format'
+        }, status=400)
+    except Exception as e:
+        logger.error(f"Unexpected error updating appointment: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': 'An unexpected error occurred'
+        }, status=500)
+
+
+
+
+#Appointment deleting section 
+@csrf_exempt
+@require_http_methods(["DELETE"])
+def delete_appointment(request):
+    logger.info("Delete appointment request received")
+    
+    try:
+        # Parse JSON data from request body
+        data = json.loads(request.body)
+        appointment_id = data.get('id')
+        
+        if not appointment_id:
+            logger.warning("No appointment ID provided in delete request")
+            return JsonResponse({
+                'success': False,
+                'error': 'Appointment ID is required'
+            }, status=400)
+            
+        try:
+            # Get the appointment
+            appointment = Appointment.objects.get(id=appointment_id)
+            
+            # Delete the appointment
+            with transaction.atomic():
+                appointment.delete()
+                logger.info(f"Appointment {appointment_id} deleted successfully")
+                
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Appointment deleted successfully'
+                })
+                
+        except Appointment.DoesNotExist:
+            logger.warning(f"Appointment {appointment_id} not found for deletion")
+            return JsonResponse({
+                'success': False,
+                'error': 'Appointment not found'
+            }, status=404)
+            
+        except Exception as e:
+            logger.error(f"Error deleting appointment: {str(e)}")
+            return JsonResponse({
+                'success': False,
+                'error': 'Failed to delete appointment'
+            }, status=500)
+            
+    except json.JSONDecodeError:
+        logger.error("Invalid JSON in delete request body")
+        return JsonResponse({
+            'success': False,
+            'error': 'Invalid request format'
+        }, status=400)
+        
+    except Exception as e:
+        logger.error(f"Unexpected error in delete appointment: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'error': 'An unexpected error occurred'
+        }, status=500)
 
