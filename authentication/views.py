@@ -1,10 +1,12 @@
 #For the sign In section
-from .models import Patient, Doctor, Admin
+from Base.models import Patients
+from Base.models import Doctors
+from Base.models import Admin
 import json
 import logging
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Patient, Doctor, Admin
+
 import json
 import logging
 import bcrypt  # Import bcrypt instead of Django's check_password
@@ -26,11 +28,11 @@ def signIn(request):
 
             # More detailed user lookup logging
             if user_type == "patients":
-                users = Patient.objects.filter(email=email)
+                users = Patients.objects.filter(email=email)
                 
                 user = users.first()
             elif user_type == "doctors":
-                users = Doctor.objects.filter(email=email)
+                users = Doctors.objects.filter(email=email)
                 user = users.first()
             elif user_type == "admin":
                 users = Admin.objects.filter(email=email)
@@ -118,7 +120,7 @@ def signUp(request):
             }, status=400)
 
         # Checking if user already exists across all user types
-        if (Patient.objects.filter(email=email).exists() ):
+        if (Patients.objects.filter(email=email).exists() ):
             return JsonResponse({
                 'success': False, 
                 'message': 'An account with this email already exists.'
@@ -131,7 +133,7 @@ def signUp(request):
 
         try:
             # Creating a Patient by default 
-            patient = Patient.objects.create(
+            patient = Patients.objects.create(
                 first_name=first_name,
                 last_name=last_name,
                 email=email,

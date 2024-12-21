@@ -36,7 +36,7 @@ window.handleUserSession = function(userData) {
   // Additional patient-specific session handling
   console.log('Patient session initialized');
 }
-  */
+  
 ///Header greetings
  // Function to get the current greeting based on time
  function getGreeting() {
@@ -65,7 +65,7 @@ if (username1) {
 } else {
   usernames.textContent = `Guest!`; // Fallback if no name is stored
 }
-
+*/
 
 //function to book an appointment
 document.getElementById("appointmentForm").addEventListener("submit", function (event) {
@@ -78,7 +78,7 @@ document.getElementById("appointmentForm").addEventListener("submit", function (
     };
 
     const selectedDoctor = document.getElementById("doctor").value;
-    console.log("Selected Doctor:", selectedDoctor);
+
     
     const formData = {
       appointment_type: document.getElementById("appointmentType").value,
@@ -88,13 +88,16 @@ document.getElementById("appointmentForm").addEventListener("submit", function (
       communication_type: document.getElementById("communicationType").value,
       payment_type: document.getElementById("paymentType").value,
       patient_id: patient_id,
-    };
-    console.log("Sending data:", formData);
+     
 
-    fetch("http://127.0.0.1:3000/appointments", {
+    };
+    const url= 'http://127.0.0.1:8000/patients/book_appointment/'
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken,
       },
       body: JSON.stringify(formData),
     })
@@ -112,14 +115,13 @@ document.getElementById("appointmentForm").addEventListener("submit", function (
       });
   });
 
-// Function to fetch appointments and populate the table
-// Function to fetch appointments and populate the table()
 
 
+ /*
 async function fetchAppointments() {
   try {
    
-    const response = await fetch(`http://localhost:3000/api/appointments/${patient_id}`);
+    const response = await fetch(`http://localhost:8000/view_appointment/${patient_id}/`);
     const appointments = await response.json();
     console.log("Appointment Data:", appointments);
     const tbody = document.getElementById("Tbody");
@@ -175,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
       blur2.classList.add('active');
     }
   }
-  
+  */
 
 // Function to handle updating the appointment
 

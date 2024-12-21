@@ -149,6 +149,7 @@
             <i id="cancel" onclick="toggle1()" class="fa-solid fa-xmark"></i>
           </div>
           <form id="appointmentForm">
+            {% csrf_token %}
             <div>
               <label for="appointmentType" class="appointmentType"
                 >Type of Appointment:</label
