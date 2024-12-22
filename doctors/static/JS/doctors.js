@@ -18,7 +18,8 @@ else{
 console.log("User Type:", userType);
 console.log("Doctor's Id:", doctor_id);
 console.log("Doctor's First name:", first_name);
-///function to edit the account details
+
+
 // Function to edit account details
 document.getElementById("updateAccountFormDoc").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent the form from submitting
@@ -69,9 +70,9 @@ document.getElementById("updateAccountFormDoc").addEventListener("submit", funct
       document.getElementById("confirmPasswordErrorDoc").textContent = "Passwords do not match.";
       isValid = false;
     }
-    console.log("Doctor's Id for Account update: ",doctor_id);
     
-    
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
     if (isValid) {
         const data3 = {
             email: newEmail,
@@ -79,14 +80,14 @@ document.getElementById("updateAccountFormDoc").addEventListener("submit", funct
             newpassword: newPassword,
             userId :doctor_id
         };
-        console.log('Sending data:', data3);
-        
-        fetch('http://localhost:3000/AccountEditDoc', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data3),
+       
+        fetch("http://127.0.0.1:8000/doctors/account_edit/", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            'X-CSRFToken': csrfToken,
+          },
+          body: JSON.stringify(data3),
         })
         .then(response => {
             if (!response.ok) {
@@ -118,7 +119,7 @@ async function fetchDocAppointments() {
   
    const doctor_id = sessionStorage.getItem('userId');
     console.log("DoctorControll ID:",doctor_id);
-    const response = await fetch(`http://localhost:3000/doctor/appointments/${doctor_id}`);
+    const response = await fetch(`http://localhost:8000/doctors/appointments/${doctor_id}/`);
     const appointments = await response.json();
 
     const tbody = document.getElementById("");

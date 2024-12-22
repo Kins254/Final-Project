@@ -117,6 +117,7 @@ document.getElementById("appointmentForm").addEventListener("submit", function (
 
 
 
+  //API For viewing appointments
  
 async function fetchAppointments() {
   try {
@@ -457,7 +458,7 @@ document.getElementById("updateAccountForm")
         newpassword: newPassword,
         userId:patient_id
       };
-      console.log("Sending data:", data2);
+     
 
       fetch("http://127.0.0.1:8000/patients/account_edit/", {
         method: "PUT",

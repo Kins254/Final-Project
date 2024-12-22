@@ -83,6 +83,7 @@
     <div class="TheContentDoc">
       <div class="slidingDocContent" id="appointmentDocContent">
         <form id="searchFormAppDoc">
+          {% csrf_token %}
           <input type="text" id="idFilterAppDoc" placeholder="Search by ID" name="idFilterAppDoc">
           <input type="text" id="patientIdFilterAppDoc" placeholder="Search by Patient ID" name="patientIdFilterAppDoc">
           <input type="text" id="AppointmentDateFilterAppDoc" placeholder="Search by Appointment Date" name="AppointmentDateFilterAppDoc">
@@ -111,7 +112,7 @@
       <div class="slidingDocContent" id="PrescriptionDocContent">
         <!--For searching the patient to be given the medicine prescriptions-->
         <form id="patientPresSearchForm">
-
+          {% csrf_token %}
           <input type="text" id="patientPresDocIdFilter" placeholder="Search by ID" name="patientPresDocIdFilter">
           <input type="text" id="patientPresDocEmailIdFilter" placeholder="Search by Email" name="patientPresDocEmailIdFilter">
           <input type="text" id="patientPresDocNumberIdFilter" placeholder="Search by Phone Number" name="patientPresDocNumberIdFilter">
@@ -137,7 +138,7 @@
 
         <!--For the medicine section-->
         <form id="PrescriptionSearchForm">
-
+          {% csrf_token %}
           <input type="text" id="DrugidFilterPrescriptionDoc" placeholder="Search by ID" name="DrugidFilterPrescriptionDoc">
           <input type="text" id="DrugNameFilterPrescriptionDoc" placeholder="Search by Drug Name" name="DrugNameFilterPrescriptionDoc">
           <input type="text" id="doctorIdFilterPrescriptionDoc" placeholder="Search by category" name="doctorIdFilterPrescriptionDoc">
@@ -198,6 +199,7 @@
     <div class="TheContentDocPopups">
       <div class="PrescriptionContentPopup">
         <form id="PrescriptionSearchFormPopup">
+          {% csrf_token %}
           <input
             type="text"
             id="idPrescriptionFilterPopup"
@@ -258,6 +260,7 @@
           </div>
           <h2>Update Account Information</h2>
           <form id="updateAccountFormDoc">
+            {% csrf_token %}
             <!-- email section-->
             <div>
               <label for="newEmailDoc" class="newEmailDoc">New Email:</label>

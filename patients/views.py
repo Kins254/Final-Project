@@ -1,6 +1,7 @@
 import json
 import bcrypt
 import logging
+from django.urls import reverse
 from Base.models import Doctors
 from Base.models import Patients
 from Base.models import Appointment
@@ -8,11 +9,16 @@ from django.db import transaction
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
+from django.http import  HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 
 
 def patients(request):
@@ -340,13 +346,7 @@ def account_edit(request):
             'message': 'An error occurred while updating the account'
         }, status=500)
 
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.http import require_http_methods
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponseRedirect
-from django.urls import reverse
-import json
-from django.views.decorators.csrf import csrf_protect
+#Account Deleting section
 
 logger = logging.getLogger(__name__)
 @csrf_protect
