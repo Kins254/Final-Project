@@ -1,4 +1,5 @@
 import json
+import bcrypt
 import logging
 from Base.models import Doctors
 from Base.models import Patients
@@ -9,6 +10,8 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.http import require_http_methods
 
 
@@ -267,3 +270,144 @@ def delete_appointment(request):
             'error': 'An unexpected error occurred'
         }, status=500)
 
+
+#For updating the account
+
+
+logger = logging.getLogger(__name__)
+@csrf_exempt
+@require_http_methods(["PUT", "PATCH"])
+def account_edit(request):
+    print(f"Received request: {request.method}")
+    try:
+        data = json.loads(request.body)
+        email = data.get("email")
+        password = data.get("password")
+        newpassword = data.get("newpassword")
+        userId = data.get("userId")
+
+        if not all([email, password, newpassword, userId]):
+            return JsonResponse({
+                'success': False,
+                'message': 'Please fill all the required fields'
+            }, status=400)
+
+        # Retrieve the user by userId and email
+        try:
+            user = Patients.objects.get(id=userId)
+        except Patients.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'message': 'No user found with this email and userId'
+            }, status=404)
+
+        # Verify the current password
+        stored_hash = user.password_hash.encode('utf-8')
+        input_password = password.encode('utf-8')
+
+        if not bcrypt.checkpw(input_password, stored_hash):
+            return JsonResponse({
+                'success': False,
+                'message': 'Incorrect password'
+            }, status=401)
+
+        # Update the email and password if provided
+        if newpassword:
+            new_password_hash = bcrypt.hashpw(newpassword.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            user.password_hash = new_password_hash
+        if 'email' in data:
+            user.email = data['email']
+
+        # Save the updates atomically
+        with transaction.atomic():
+            user.save()
+
+        logger.info(f"User {userId} updated successfully")
+        return JsonResponse({
+            'success': True,
+            'message': 'Account updated successfully'
+        })
+
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'message': 'Invalid JSON data'
+        }, status=400)
+    except Exception as e:
+        logger.error(f"Error updating user: {str(e)}")
+        return JsonResponse({
+            'success': False,
+            'message': 'An error occurred while updating the account'
+        }, status=500)
+
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse, HttpResponseRedirect
+from django.urls import reverse
+import json
+from django.views.decorators.csrf import csrf_protect
+
+logger = logging.getLogger(__name__)
+@csrf_protect
+@require_http_methods(["DELETE"])
+def delete_account(request):
+   
+        
+
+    try:
+        # Get and verify session
+        session_user_id = request.session.get('user_id')
+        if not session_user_id:
+            return JsonResponse({
+                'success': False,
+                'message': 'No active session found'
+            }, status=401)
+
+        # Parse request body
+        data = json.loads(request.body)
+        patient_id = data.get('patient_id')
+        
+        if not patient_id:
+            return JsonResponse({
+                'success': False,
+                'message': 'Patient ID not provided'
+            }, status=400)
+        
+        # Verify the patient_id matches the logged-in user's ID
+        if str(patient_id) != str(session_user_id):
+            return JsonResponse({
+                'success': False,
+                'message': 'Unauthorized deletion attempt'
+            }, status=403)
+        print(Patients.objects.all())
+        
+        # Delete the user
+        user = Patients.objects.get(id=patient_id)
+        user.delete()
+        print(Patients.objects.all())
+        
+        # Clear session
+        request.session.flush()
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Account deleted successfully'
+        })
+        
+    except Patients.DoesNotExist:
+        return JsonResponse({
+            'success': False,
+            'message': 'User not found'
+        }, status=404)
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'message': 'Invalid JSON data'
+        }, status=400)
+    except Exception as e:
+        print(f"Error in delete_account: {str(e)}")  # Add logging
+        return JsonResponse({
+            'success': False,
+            'message': f'Error deleting account: {str(e)}'
+        }, status=500)

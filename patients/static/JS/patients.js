@@ -389,10 +389,9 @@ document.querySelector('.ambulanceParent').addEventListener('click', async funct
 });
 
 
-///function to edit the account details
-// Function to edit account details
-document
-  .getElementById("updateAccountForm")
+//function to edit the account details
+
+document.getElementById("updateAccountForm")
   .addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent the form from submitting
 
@@ -449,7 +448,8 @@ document
         "Passwords do not match.";
       isValid = false;
     }
-    const userId = sessionStorage.getItem('userId');
+    
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
     if (isValid) {
       const data2 = {
         email: newEmail,
@@ -459,10 +459,11 @@ document
       };
       console.log("Sending data:", data2);
 
-      fetch("http://localhost:3000/AccountEdit", {
+      fetch("http://127.0.0.1:8000/patients/account_edit/", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          'X-CSRFToken': csrfToken,
         },
         body: JSON.stringify(data2),
       })
@@ -480,47 +481,84 @@ document
             alert("Credentials update failed");
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.error("Updating error:", error);
         });
     }
   });
 
+  
+
 //API For deleting account
-document.querySelector(".DeleteAccountPat").addEventListener('click',function(){
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+
+document.querySelector(".DeleteAccountPat").addEventListener('click', function(){
+  // Check if patient_id exists and is defined
+  if (!patient_id) {
+    alert("You must be logged in to delete your account");
+    return;
+  }
+
   const isConfirmedAcc = confirm("Are you sure you want to delete your account?");
   
-  // If user clicks Cancel, return early and do nothing
   if (!isConfirmedAcc) {
     return;
   }
-  fetch("http://localhost:3000/del/patAccount",{
-    method:'DELETE',
-    headers:{'Content-Type':'application/JSON'},
-    body:JSON.stringify({patient_id})
+
+  const csrftoken = getCookie('csrftoken');
+
+  fetch("http://127.0.0.1:8000/patients/delete_account/", {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrftoken,
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({
+      patient_id: patient_id
+    })
   })
   .then(response => {
     if (!response.ok) {
+      if (response.status === 403) {
+        throw new Error('Authentication failed - please log in again');
+      }
       throw new Error("Network response was not ok");
     }
     return response.json();
   })
   .then(data => {
-    console.log("Data fetched is:", data);
-    // Show success message
     alert("Account deleted successfully!");
-    window.location.href = 'http://127.0.0.1:5500/portal.html'; // or your homepage URL
-  
-    
+    window.location.href = 'http://127.0.0.1:8000/authentication/signIn/';
   })
   .catch(error => {
     console.error("Fetching error:", error);
-    // Show error message
-    alert("Failed to delete Account. Please try again.");
+    if (error.message.includes('Authentication failed')) {
+      //window.location.href = 'http://127.0.0.1:8000/authentication/signIn/';
+      alert("Authentication Failed. Please try again.");
+    } else {
+      alert("Failed to delete Account. Please try again.");
+    }
   });
 });
-
-
 
   // toggle sections
 
