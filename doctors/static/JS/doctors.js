@@ -112,7 +112,7 @@ document.getElementById("updateAccountFormDoc").addEventListener("submit", funct
 
 //appointment section
 //Appointment Display API
-// Function to fetch appointments and populate the table()
+/* Function to fetch appointments and populate the table()
 async function fetchDocAppointments() {
   try {
    // Retrieve user ID from local storage
@@ -123,7 +123,7 @@ async function fetchDocAppointments() {
     const appointments = await response.json();
 
     const tbody = document.getElementById("");
-    tbody.innerHTML = ""; // Clear existing rows
+    tbody.innerHTML = "";
 
     appointments.forEach((appointment) => {
       const row = document.createElement("tr");
@@ -153,7 +153,7 @@ async function fetchDocAppointments() {
 
 // Call the fetchAppointments function when the page loads
 window.onload = fetchDocAppointments;
-
+*/
 // Appointment section updated
 
 
@@ -176,7 +176,7 @@ async function DocAppointmentFetch() {
     if (PatId3) queryParams3.append('patientId', PatId3); 
     if (date3) queryParams3.append('date', date3); 
  
-    const response3 = await fetch(`http://localhost:3000/Doc/appointments?${queryParams3.toString()}`); 
+    const response3 = await fetch(`http://127.0.0.1:8000/doctors/view_appointment?${queryParams3.toString()}`); 
     const appointments = await response3.json(); 
  
     console.log("Fetched Appointments:", appointments); 
@@ -226,25 +226,41 @@ async function ApproveRow(appointmentId) {
   const userConfirm = confirm("Do you want to approve this appointment?");
   if (userConfirm) {
     try {
-      // Check if appointmentId is valid before making the request
+      // Validate the appointmentId
       if (!appointmentId || isNaN(appointmentId)) {
         alert("Invalid appointment ID.");
         return;
       }
-
-      const response = await fetch(`http://localhost:3000/appointments/approve/${appointmentId}`, {
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      const url = `http://127.0.0.1:8000/doctors/approve_appointment/${appointmentId}/`;
+      console.log('Making request to:', url);
+      console.log('Method:', 'PUT');
+      // Send the PUT request
+      const response = await fetch(url, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': csrfToken,
+         },
       });
-
+      console.log('Attempting to fetch:', url);
+      console.log('Response status:', response.status);
+      console.log('Response headers:', [...response.headers.entries()]);
       if (!response.ok) {
         throw new Error('Failed to update appointment status.');
       }
 
-      // Update the status in the table after successful update
+      // Parse the response
+      const result = await response.json();
+      const { status } = result;
+
+      // Update the status in the table dynamically
       const row = document.querySelector(`tr[data-id='${appointmentId}']`);
       if (row) {
-        row.querySelector("td:nth-last-child(2)").innerText = "Approved"; // Assuming status is in the second-to-last column
+        const statusCell = row.querySelector("[data-status]");
+        if (statusCell) {
+          statusCell.innerText = status;
+        }
       }
 
       alert(`Appointment ${appointmentId} has been approved.`);
@@ -257,6 +273,7 @@ async function ApproveRow(appointmentId) {
   }
 }
 
+
 //Appointment Completed section
 async function CompletedRow(appointmentId) {
   const userConfirm = confirm("Do you want to Complete this appointment?");
@@ -267,10 +284,13 @@ async function CompletedRow(appointmentId) {
         alert("Invalid appointment ID.");
         return;
       }
-
-      const response = await fetch(`http://localhost:3000/appointments/complete/${appointmentId}`, {
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      const response = await fetch(`http://127.0.0.1:8000/doctors/complete_appointment/${appointmentId}/`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': csrfToken,
+         },
       });
 
       if (!response.ok) {
@@ -303,10 +323,13 @@ async function deleteAppointment(appointmentId) {
         alert("Invalid appointment ID.");
         return;
       }
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-      const response = await fetch(`http://localhost:3000/appointments/delete/${appointmentId}`, {
+      const response = await fetch(`http://127.0.0.1:8000/doctors/delete_appointment/${appointmentId}/`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': csrfToken, },
       });
 
       if (!response.ok) {

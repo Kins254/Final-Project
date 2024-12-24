@@ -37,6 +37,140 @@ def dashboard(request):
     return render(request, "doctor/doctors.html", {"user_id": user_id})
 
 
+#For the Appointment section
+from django.db.models import Q
+from datetime import datetime
+from django.core.exceptions import ValidationError
+@csrf_exempt
+@require_http_methods(["GET"])
+def view_appointment(request):
+    try:
+        appointment_id = request.GET.get("id")  # Use GET parameters
+        patient_id = request.GET.get("patientId")
+        appointment_date = request.GET.get("date")
+        doctor_id = request.GET.get("doctorId")  # Ensure it's passed correctly
+
+        # Base query
+        appointment = Appointment.objects.filter(doctor_id=doctor_id)
+
+        # Filter based on parameters
+        if appointment_id:
+            appointment = appointment.filter(id=appointment_id)
+
+        if patient_id:
+            appointment = appointment.filter(patient_id=patient_id)
+
+        if appointment_date:
+            appointment = appointment.filter(appointment_date=appointment_date)
+
+        # Convert queryset to a list of dictionaries
+        appointment_data = list(appointment.values(
+            'id',
+            'patient_id',
+            'appointment_date',
+            'appointment_time',
+            'appointment_type',
+            'communication_type',
+            'payment_type',
+            'status'
+        ))
+
+        return JsonResponse(appointment_data, safe=False)
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+
+
+
+#For Approving an appointment
+from django.views.decorators.http import require_http_methods
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+#@login_required
+@csrf_exempt
+@require_http_methods(["PUT"])
+def approve_appointment(request, appointment_id):
+    """
+    Approve a specific appointment
+    """
+    try:
+        # Retrieve the appointment
+        appointment = get_object_or_404(Appointment, id=appointment_id)
+
+        # Update status
+        appointment.status = 'Approved'
+        appointment.save()
+
+        # Return the updated status
+        return JsonResponse({
+            'message': 'Appointment approved successfully',
+            'id': appointment_id,
+            'status': appointment.status
+        })
+
+    except Appointment.DoesNotExist:
+        return JsonResponse({'error': 'Appointment not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+#For completing an Appointment
+@csrf_exempt
+@require_http_methods(["PUT"])
+def complete_appointment(request, appointment_id):
+  
+    try:
+        # Retrieve the appointment
+        appointment = get_object_or_404(Appointment, id=appointment_id)
+
+        # Update status
+        appointment.status = 'Completed'
+        appointment.save()
+
+        # Return the updated status
+        return JsonResponse({
+            'message': 'Appointment Completedd successfully',
+            'id': appointment_id,
+            'status': appointment.status
+        })
+
+    except Appointment.DoesNotExist:
+        return JsonResponse({'error': 'Appointment not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+
+
+
+#For deleteing an appointment
+
+
+@csrf_exempt
+@require_http_methods(["DELETE"])
+def delete_appointment(request, appointment_id):
+  
+    try:
+        # Retrieve the appointment
+        appointment = get_object_or_404(Appointment, id=appointment_id)
+
+        with transaction.atomic():
+                appointment.delete()
+                logger.info(f"Appointment {appointment_id} deleted successfully")
+                
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Appointment deleted successfully'
+                })
+
+    except Appointment.DoesNotExist:
+        return JsonResponse({'error': 'Appointment not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+
+
+
+
 
 
 #For the account edit section
@@ -105,4 +239,73 @@ def account_edit(request):
         return JsonResponse({
             'success': False,
             'message': 'An error occurred while updating the account'
+        }, status=500)
+
+
+
+
+#Account Deleting section
+
+logger = logging.getLogger(__name__)
+@csrf_protect
+@require_http_methods(["DELETE"])
+def delete_account(request):
+   
+        
+
+    try:
+        # Get and verify session
+        session_user_id = request.session.get('user_id')
+        if not session_user_id:
+            return JsonResponse({
+                'success': False,
+                'message': 'No active session found'
+            }, status=401)
+
+        # Parse request body
+        data = json.loads(request.body)
+        doctor_id = data.get(' doctor_id')
+        
+        if not  doctor_id:
+            return JsonResponse({
+                'success': False,
+                'message': ' doctor ID not provided'
+            }, status=400)
+        
+        # Verify the  doctor_id matches the logged-in user's ID
+        if str( doctor_id) != str(session_user_id):
+            return JsonResponse({
+                'success': False,
+                'message': 'Unauthorized deletion attempt'
+            }, status=403)
+        print(Doctors.objects.all())
+        
+        # Delete the user
+        user = Doctors.objects.get(id= doctor_id)
+        user.delete()
+        print(Doctors.objects.all())
+        
+        # Clear session
+        request.session.flush()
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Account deleted successfully'
+        })
+        
+    except Doctors.DoesNotExist:
+        return JsonResponse({
+            'success': False,
+            'message': 'User not found'
+        }, status=404)
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'success': False,
+            'message': 'Invalid JSON data'
+        }, status=400)
+    except Exception as e:
+        print(f"Error in delete_account: {str(e)}")  # Add logging
+        return JsonResponse({
+            'success': False,
+            'message': f'Error deleting account: {str(e)}'
         }, status=500)
