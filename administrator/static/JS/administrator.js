@@ -19,7 +19,7 @@ console.log("Type In patient section:", userType);
 console.log("Admin Id:", admin_id);
 console.log("Admin's First name:", first_name);
 
-
+/*
 ///Header greetings
  // Function to get the current greeting based on time
  function getGreeting() {
@@ -49,7 +49,7 @@ if (username1) {
   usernames.textContent = `Guest!`; // Fallback if no name is stored
 }
 
-
+*/
 
 
 //fetching the patients data
@@ -286,11 +286,14 @@ document.querySelector(".DocAdding").addEventListener("submit", function (event)
     };
     
     console.log('Sending data:', data);  // Log the data being sent
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-    fetch('http://localhost:3000/doc/register', {
+    fetch('http://127.0.0.1:8000/administrator/doctor_account/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRFToken': csrfToken,
       },
       body: JSON.stringify(data),
     })
@@ -302,6 +305,8 @@ document.querySelector(".DocAdding").addEventListener("submit", function (event)
         console.log('Response data:', data);
         if (data.success) {
           alert('Registration successful! ');
+            // Optionally clear the form:
+          document.querySelector(".DocAdding").reset();
           
         } else {
           alert(data.message || 'Registration failed. Please try again.');

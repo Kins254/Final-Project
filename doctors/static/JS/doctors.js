@@ -99,6 +99,7 @@ document.getElementById("updateAccountFormDoc").addEventListener("submit", funct
         .then(data3 => {
             if (data3.success) {
                 alert("Credentials updated successfully");
+                document.querySelector("#updateAccountFormDoc").reset();
             } else {
                 alert("Credentials update failed");
             }
@@ -401,6 +402,22 @@ document.getElementById("AppointmentDocEditForm").addEventListener("submit", fun
 
 
 //API For deleting account
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
 function deleteAccount() {
   const isConfirmedAcc = confirm("Are you sure you want to delete your account?");
   
@@ -408,26 +425,46 @@ function deleteAccount() {
     return;
   }
 
-  fetch("http://localhost:3000/del/DocAccount", {
+  // Verify we have a doctor_id
+  if (!doctor_id) {
+    console.error("Doctor ID not found in session");
+    alert("Error: Could not find account information");
+    return;
+  }
+
+  const csrftoken = getCookie('csrftoken');
+  
+  console.log('Attempting to delete account for doctor_id:', doctor_id); // Debug log
+
+  fetch("http://127.0.0.1:8000/doctors/delete_account/", {
     method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ doctor_id}) 
+    credentials: 'include',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrftoken,
+      'X-Requested-With': 'XMLHttpRequest'
+    },
+    body: JSON.stringify({ doctor_id: doctor_id })
   })
-    .then(response => {
+  .then(response => {
+    console.log('Server response status:', response.status);
+    return response.json().then(data => {
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        console.error('Server error:', data); // Log the error details
+        throw new Error(data.message || "Failed to delete account");
       }
-      return response.json();
-    })
-    .then(data => {
-      console.log("Data fetched is:", data);
-      alert("Account deleted successfully!");
-      window.location.href = 'http://127.0.0.1:5500/portal.html';
-    })
-    .catch(error => {
-      console.error("Fetching error:", error);
-      alert("Failed to delete Account. Please try again.");
+      return data;
     });
+  })
+  .then(data => {
+    alert("Account deleted successfully!");
+    window.location.href = 'http://127.0.0.1:8000/authentication/signIn/';
+  })
+  .catch(error => {
+    console.error("Delete account error:", error);
+    alert("Failed to delete account: " + error.message);
+  });
 }
 
 

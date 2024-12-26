@@ -105,6 +105,7 @@ document.getElementById("appointmentForm").addEventListener("submit", function (
       .then((data) => {
         if (data.success) {
           alert("Appointment booked successfully!");
+          document.querySelector("#appointmentForm").reset();
         } else {
           alert("Failed to book the appointment. Please try again.");
         }
@@ -217,6 +218,7 @@ document.getElementById("AppointmentEditForm").addEventListener("submit", functi
     .then((data) => {
       if (data.success) {
         alert("Appointment updated successfully!");
+        document.querySelector("#AppointmentEditForm").reset();
       } else {
         alert("Failed to update the appointment. Please try again.");
       }
@@ -478,6 +480,7 @@ document.getElementById("updateAccountForm")
         .then((data2) => {
           if (data2.success) {
             alert("Credentials updated successfully");
+            document.querySelector("#updateAccountForm").reset();
           } else {
             alert("Credentials update failed");
           }

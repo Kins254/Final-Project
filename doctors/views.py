@@ -250,13 +250,16 @@ logger = logging.getLogger(__name__)
 @csrf_protect
 @require_http_methods(["DELETE"])
 def delete_account(request):
-   
-        
-
     try:
+        # Log the incoming request
+        logger.debug(f"Delete account request received with body: {request.body}")
+        
         # Get and verify session
         session_user_id = request.session.get('user_id')
+        logger.debug(f"Session user_id: {session_user_id}")
+        
         if not session_user_id:
+            logger.warning("No active session found")
             return JsonResponse({
                 'success': False,
                 'message': 'No active session found'
@@ -264,47 +267,54 @@ def delete_account(request):
 
         # Parse request body
         data = json.loads(request.body)
-        doctor_id = data.get(' doctor_id')
+        doctor_id = data.get('doctor_id')
+        logger.debug(f"Received doctor_id: {doctor_id}")
         
-        if not  doctor_id:
+        if not doctor_id:
+            logger.warning("Doctor ID not provided in request")
             return JsonResponse({
                 'success': False,
-                'message': ' doctor ID not provided'
+                'message': 'Doctor ID not provided'
             }, status=400)
         
-        # Verify the  doctor_id matches the logged-in user's ID
-        if str( doctor_id) != str(session_user_id):
+        # Verify the doctor_id matches the logged-in user's ID
+        if str(doctor_id) != str(session_user_id):
+            logger.warning(f"Session ID ({session_user_id}) does not match requested doctor_id ({doctor_id})")
             return JsonResponse({
                 'success': False,
                 'message': 'Unauthorized deletion attempt'
             }, status=403)
-        print(Doctors.objects.all())
-        
-        # Delete the user
-        user = Doctors.objects.get(id= doctor_id)
-        user.delete()
-        print(Doctors.objects.all())
-        
-        # Clear session
-        request.session.flush()
-        
-        return JsonResponse({
-            'success': True,
-            'message': 'Account deleted successfully'
-        })
-        
-    except Doctors.DoesNotExist:
-        return JsonResponse({
-            'success': False,
-            'message': 'User not found'
-        }, status=404)
-    except json.JSONDecodeError:
+
+        try:
+            user = Doctors.objects.get(id=doctor_id)
+            logger.info(f"Found doctor to delete: {user.email}")
+            user.delete()
+            logger.info(f"Successfully deleted doctor with ID: {doctor_id}")
+            
+            # Clear session
+            request.session.flush()
+            logger.info("Session cleared")
+            
+            return JsonResponse({
+                'success': True,
+                'message': 'Account deleted successfully'
+            })
+            
+        except Doctors.DoesNotExist:
+            logger.error(f"Doctor with ID {doctor_id} not found in database")
+            return JsonResponse({
+                'success': False,
+                'message': 'User not found'
+            }, status=404)
+            
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse JSON: {str(e)}")
         return JsonResponse({
             'success': False,
             'message': 'Invalid JSON data'
         }, status=400)
     except Exception as e:
-        print(f"Error in delete_account: {str(e)}")  # Add logging
+        logger.error(f"Unexpected error in delete_account: {str(e)}")
         return JsonResponse({
             'success': False,
             'message': f'Error deleting account: {str(e)}'

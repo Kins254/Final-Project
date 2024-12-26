@@ -112,6 +112,7 @@
         </div>
         <div class="slidingContent" id="doctorContent">
           <form id="searchFormDoc">
+            {% csrf_token %}
             <input type="text" id="idFilterDoc" placeholder="Search by ID" name="idFilterDoc">
             <input type="text" id="emailFilterDoc" placeholder="Search by Email" name="emailFilterDoc">
             <input type="text" id="phoneFilterDoc" placeholder="Search by Phone" name="phoneFilterDoc">
@@ -137,6 +138,7 @@
         </div>
         <div class="slidingContent" id="appointmentContent">
           <form id="searchFormApp">
+            {% csrf_token %}
             <input type="text" id="idFilterApp" placeholder="Search by ID" name="idFilterApp">
             <input type="text" id="patientIdFilterApp" placeholder="Search by Patient ID" name="patientIdFilterApp">
             <input type="text" id="doctorIdFilterApp" placeholder="Search by Doctor ID" name="doctorIdFilterApp">
@@ -191,7 +193,7 @@
           </div>
           <p>Add a Doctor</p>
           <form class="DocAdding">
-            
+            {% csrf_token %}
             <label for="name" class="name">NAME:</label>
             <input type="text" id="name" name="name" placeholder="e.g., Erick Kinuthia" required>
             
@@ -264,6 +266,7 @@
           </div>
           <h2>Update Account Information</h2>
           <form id="updateAccountFormAdmin" >
+            {% csrf_token %}
             <!-- email section-->
             <div>
               <label for="newEmailAdmin" class="newEmailAdmin">New Email:</label>
