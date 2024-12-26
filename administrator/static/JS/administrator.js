@@ -56,55 +56,94 @@ if (username1) {
 async function AdminPatientsFetch() {
   console.log("AdminPatientsFetch function triggered");
   console.log("Fetching data...");
-    try {
-      const id = document.getElementById('idFilterPat').value;
-      const email = document.getElementById('emailFilterPat').value;
-      const phone = document.getElementById('phoneFilterPat').value;
+  
+  try {
+    const id = document.getElementById('idFilterPat').value;
+    const email = document.getElementById('emailFilterPat').value;
+    const phone = document.getElementById('phoneFilterPat').value;
     
-      // Build query parameters string
-      const queryParams = new URLSearchParams();
-      if (id) queryParams.append('id', id);
-      if (email) queryParams.append('email', email);
-      if (phone) queryParams.append('phone', phone);
-  
-      // Fetch filtered data from the server
-      const response = await fetch(`http://localhost:3000/Admin/patients?${queryParams.toString()}`);
-      const patients = await response.json();
-      console.log("Fetch response:", response); 
+    // Build query parameters string
+    const queryParams = new URLSearchParams();
+    if (id) queryParams.append('id', id);
+    if (email) queryParams.append('email', email);
+    if (phone) queryParams.append('phone', phone);
+
+    const url = `http://127.0.0.1:8000/administrator/fetch_patients?${queryParams.toString()}`;
+    console.log("Fetching from URL:", url);
+
+    const response = await fetch(url);
     
-      const tbody = document.getElementById("TbodyPatAdmin");
-      tbody.innerHTML = ""; // Clear existing rows
-  
-      patients.forEach((patient) => {
-        const row = document.createElement("tr");
-        row.setAttribute("data-id", patient.id); 
-  
-        // Populate row with patient data
-        row.innerHTML = `
-          <td>${patient.id}</td>
-          <td>${patient.first_name}</td>
-          <td>${patient.last_name}</td>
-          <td>${patient.email}</td>
-          <td>${patient.phone}</td>
-          <td>${patient.address}</td>
-          <td>${patient.gender}</td>
-          <td>${patient.date_of_birth}</td>
-          <td>
-           
-            <button class="delete-btn" onclick="deletePatient(${patient.id})">Delete</button>
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const responseData = await response.json();
+    console.log("Received patients data:", responseData);
+
+    // Extract the patients array from the data property
+    const patients = responseData.data;
+
+    const tbody = document.getElementById("TbodyPatAdmin");
+    if (!tbody) {
+      throw new Error("Table body element not found!");
+    }
+    
+    tbody.innerHTML = ""; // Clear existing rows
+
+    // Handle case where no patients are found
+    if (!patients || patients.length === 0) {
+      const row = document.createElement("tr");
+      row.innerHTML = '<td colspan="9" class="text-center">No patients found</td>';
+      tbody.appendChild(row);
+      return;
+    }
+
+    patients.forEach((patient) => {
+      const row = document.createElement("tr");
+      row.setAttribute("data-id", patient.id);
+
+      // Safely handle potentially null or undefined values
+      const safeText = (text) => text || '';
+      
+      row.innerHTML = `
+        <td>${safeText(patient.id)}</td>
+        <td>${safeText(patient.first_name)}</td>
+        <td>${safeText(patient.last_name)}</td>
+        <td>${safeText(patient.email)}</td>
+        <td>${safeText(patient.phone)}</td>
+        <td>${safeText(patient.address)}</td>
+        <td>${safeText(patient.gender)}</td>
+        <td>${safeText(patient.date_of_birth)}</td>
+        <td>
+          <button class="delete-btn" onclick="deletePatient(${patient.id})">Delete</button>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+  } catch (error) {
+    console.error("Error fetching patients:", error);
+    
+    // Display error message to user
+    const tbody = document.getElementById("TbodyPatAdmin");
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="9" class="text-center text-red-500">
+            Error loading patients: ${error.message}
           </td>
-        `;
-        tbody.appendChild(row);
-      });
-    } catch (error) {
-      console.error("Error fetching patients:", error);
+        </tr>
+      `;
     }
   }
+}
+
+// Call the fetch function when the page loads
+window.onload = AdminPatientsFetch;
   
-  // Call the fetch function when the page loads
-  window.onload = AdminPatientsFetch;
-  
+
+
 //Api For deleting the patient
+
 async function deletePatient(patientId) {
   const userConfirm = confirm("Do you want to delete this Patient?");
   if (userConfirm) {
@@ -114,10 +153,13 @@ async function deletePatient(patientId) {
         alert("Invalid Patient ID.");
         return;
       }
-
-      const response = await fetch(`http://localhost:3000/adminPatient/delete/${patientId}`, {
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      const response = await fetch(`http://127.0.0.1:8000/administrator/delete_patient/${patientId}/`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json,',
+          'X-CSRFToken': csrfToken 
+
+        },
       });
 
       if (!response.ok) {
@@ -140,42 +182,66 @@ async function deletePatient(patientId) {
   //fetching the doctor's section
 
   async function AdminDoctorsFetch() {
+    console.log("AdminDoctorsFetch function triggered");
+    console.log("Fetching doctors data...");
+    
     try {
-      const id2 = document.getElementById('idFilterDoc').value;
-      const email2 = document.getElementById('emailFilterDoc').value;
-      const phone2 = document.getElementById('phoneFilterDoc').value;
-
- 
-  
+      const id = document.getElementById('idFilterDoc').value;
+      const email = document.getElementById('emailFilterDoc').value;
+      const phone = document.getElementById('phoneFilterDoc').value;
+      
       // Build query parameters string
-      const queryParams2 = new URLSearchParams();
-      if (id2) queryParams2.append('id', id2);
-      if (email2) queryParams2.append('email', email2);
-      if (phone2) queryParams2.append('phone', phone2);
+      const queryParams = new URLSearchParams();
+      if (id) queryParams.append('id', id);
+      if (email) queryParams.append('email', email);
+      if (phone) queryParams.append('phone', phone);
   
-      // Fetch filtered data from the server
-      const response2 = await fetch(`http://localhost:3000/Admin/doctors?${queryParams2.toString()}`);
-      const doctors = await response2.json();
-  console.log("Response 2:",response2);
+      const url = `http://127.0.0.1:8000/administrator/fetch_doctors?${queryParams.toString()}`;
+      console.log("Fetching from URL:", url);
+  
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const responseData = await response.json();
+      console.log("Received doctors data:", responseData);
+  
+      // Extract the doctors array from the data property
+      const doctors = responseData.data;
+  
       const tbody = document.getElementById("TbodyDocAdmin");
+      if (!tbody) {
+        throw new Error("Table body element not found!");
+      }
+      
       tbody.innerHTML = ""; // Clear existing rows
+  
+      // Handle case where no doctors are found
+      if (!doctors || doctors.length === 0) {
+        const row = document.createElement("tr");
+        row.innerHTML = '<td colspan="8" class="text-center">No doctors found</td>';
+        tbody.appendChild(row);
+        return;
+      }
   
       doctors.forEach((doctor) => {
         const row = document.createElement("tr");
-        row.setAttribute("data-id", doctor.id); 
+        row.setAttribute("data-id", doctor.id);
   
-        // Populate row with patient data
+        // Safely handle potentially null or undefined values
+        const safeText = (text) => text || '';
+        
         row.innerHTML = `
-          <td>${doctor.id}</td>
-          <td>${doctor.first_name}</td>
-          <td>${doctor.last_name}</td>
-          <td>${doctor.email}</td>
-          <td>${doctor.phone}</td>
-          <td>${doctor.specialization}</td>
-          <td>${doctor.schedule}</td>
-          
+          <td>${safeText(doctor.id)}</td>
+          <td>${safeText(doctor.first_name)}</td>
+          <td>${safeText(doctor.last_name)}</td>
+          <td>${safeText(doctor.email)}</td>
+          <td>${safeText(doctor.phone)}</td>
+          <td>${safeText(doctor.specialization)}</td>
+          <td>${safeText(doctor.schedule)}</td>
           <td>
-            
             <button class="delete-btn" onclick="deleteDoctor(${doctor.id})">Delete</button>
           </td>
         `;
@@ -183,11 +249,26 @@ async function deletePatient(patientId) {
       });
     } catch (error) {
       console.error("Error fetching doctors:", error);
+      
+      // Display error message to user
+      const tbody = document.getElementById("TbodyDocAdmin");
+      if (tbody) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center text-red-500">
+              Error loading doctors: ${error.message}
+            </td>
+          </tr>
+        `;
+      }
     }
   }
   
   // Call the fetch function when the page loads
   window.onload = AdminDoctorsFetch;
+
+
+
 
 //Adding doctors section
 
@@ -330,10 +411,12 @@ async function deleteDoctor(doctorId) {
         alert("Invalid Doctor ID.");
         return;
       }
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-      const response = await fetch(`http://localhost:3000/adminDoctor/delete/${doctorId}`, {
+      const response = await fetch(`http://127.0.0.1:8000/administrator/delete_doctor/${doctorId}/`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken  },
       });
 
       if (!response.ok) {

@@ -9,7 +9,11 @@ from django.db import transaction
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
+from django.db.models import Q
+from datetime import datetime
+from django.core.exceptions import ValidationError
 from django.http import  HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
@@ -144,4 +148,257 @@ def doctor_account(request):
         }, status=500)
     
             
-           
+            
+
+#Forfetching the Patients data
+import logging
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+
+logger = logging.getLogger(__name__)
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def fetch_patients(request):
+    try:
+        # Get query parameters
+        patients_id = request.GET.get("id")
+        email = request.GET.get("email")
+        phone = request.GET.get("phone")
+        
+        # Log incoming request parameters for debugging
+        logger.debug(f"Fetch patients request - ID: {patients_id}, Email: {email}, Phone: {phone}")
+        
+        # Start with all patients
+        patients = Patients.objects.all()
+        
+        # Apply filters if parameters are provided
+        if patients_id:
+            try:
+                patients_id = int(patients_id)  # Ensure ID is an integer
+                patients = patients.filter(id=patients_id)
+            except ValueError:
+                return JsonResponse({
+                    'error': 'Invalid patient ID format'
+                }, status=400)
+        
+        if email:
+            patients = patients.filter(email=email)
+            
+        if phone:
+            patients = patients.filter(phone=phone)
+            
+        # Check if any patients were found
+        if not patients.exists():
+            return JsonResponse({
+                'message': 'No patients found matching the criteria',
+                'data': []
+            }, status=404)
+            
+        # Convert queryset to list of dictionaries
+        patients_data = list(patients.values(
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'address',
+            'gender',
+            'date_of_birth'
+        ))
+        
+        return JsonResponse({
+            'message': 'Patients retrieved successfully',
+            'data': patients_data
+        })
+        
+    except Patients.DoesNotExist:
+        logger.error("Patients table does not exist")
+        return JsonResponse({
+            'error': 'Database table not found'
+        }, status=500)
+        
+    except Exception as e:
+        logger.error(f"An unexpected error occurred in fetch_patients: {str(e)}", exc_info=True)
+        return JsonResponse({
+            'error': 'An internal server error occurred'
+        }, status=500)
+
+
+
+
+#For deleting a patient
+
+import logging
+logger = logging.getLogger(__name__)
+
+@csrf_exempt
+@require_http_methods(["DELETE"])
+def delete_patient(request, patient_id):
+    try:
+        # Log the deletion attempt
+        logger.info(f"Attempting to delete patient with ID: {patient_id}")
+        patient_id=int(patient_id)
+        
+        # Try to get the patient
+        try:
+            patient = Patients.objects.get(id=patient_id)
+        except ObjectDoesNotExist:
+            logger.warning(f"Attempted to delete non-existent patient with ID: {patient_id}")
+            return JsonResponse({
+                'error': 'Patient not found'
+            }, status=404)
+        
+        #  Check for related appointments and delete them first
+        related_appointments = Appointment.objects.filter(patient_id=patient_id)
+        if related_appointments.exists():
+            logger.info(f"Deleting {related_appointments.count()} related appointments for patient {patient_id}")
+            related_appointments.delete()
+        
+        # Store patient info for logging
+        patient_info = f"ID: {patient.id}, Name: {patient.first_name} {patient.last_name}"
+        
+        # Delete the patient
+        patient.delete()
+        
+        # Log successful deletion
+        logger.info(f"Successfully deleted patient - {patient_info}")
+        
+        return JsonResponse({
+            'message': 'Patient deleted successfully',
+            'patient_id': patient_id
+        })
+        
+    except Exception as e:
+        # Log the error
+        logger.error(f"Error deleting patient {patient_id}: {str(e)}", exc_info=True)
+        
+        return JsonResponse({
+            'error': 'An error occurred while deleting the patient'
+        }, status=500)       
+
+
+
+
+
+#For fetching doctors data
+
+logger = logging.getLogger(__name__)
+@csrf_exempt
+@require_http_methods(["GET"])
+def fetch_doctors(request):
+    try:
+        # Get query parameters
+        doctors_id = request.GET.get("id")
+        email = request.GET.get("email")
+        phone = request.GET.get("phone")
+        
+        # Log incoming request parameters for debugging
+        logger.debug(f"Fetch doctor request - ID: {doctors_id}, Email: {email}, Phone: {phone}")
+        
+        # Start with all doctors
+        doctors = Doctors.objects.all()
+        
+        # Apply filters if parameters are provided
+        if doctors_id:
+            try:
+                doctors_id = int(doctors_id)  # Ensure ID is an integer
+                doctors =doctors.filter(id=doctors_id)
+            except ValueError:
+                return JsonResponse({
+                    'error': 'Invalid doctor ID format'
+                }, status=400)
+        
+        if email:
+            doctors = doctors.filter(email=email)
+            
+        if phone:
+            doctors = doctors.filter(phone=phone)
+            
+        # Check if any doctors were found
+        if not doctors.exists():
+            return JsonResponse({
+                'message': 'No doctors found matching the criteria',
+                'data': []
+            }, status=404)
+            
+        # Convert queryset to list of dictionaries
+        doctors_data = list(doctors.values(
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'specialization',
+            'schedule'
+        ))
+        
+        return JsonResponse({
+            'message': 'doctors retrieved successfully',
+            'data': doctors_data
+        })
+        
+    except Doctors.DoesNotExist:
+        logger.error("doctors table does not exist")
+        return JsonResponse({
+            'error': 'Database table not found'
+        }, status=500)
+        
+    except Exception as e:
+        logger.error(f"An unexpected error occurred in fetch_doctors: {str(e)}", exc_info=True)
+        return JsonResponse({
+            'error': 'An internal server error occurred'
+        }, status=500)
+        
+        
+        
+        
+#For deleting Doctors
+import logging
+logger = logging.getLogger(__name__)
+
+@csrf_exempt
+@require_http_methods(["DELETE"])
+def delete_doctor(request, doctor_id):
+    try:
+        # Log the deletion attempt
+        logger.info(f"Attempting to delete doctor with ID: {doctor_id}")
+        doctor_id=int(doctor_id)
+        
+        # Try to get the doctor
+        try:
+            doctor = Doctors.objects.get(id=doctor_id)
+        except ObjectDoesNotExist:
+            logger.warning(f"Attempted to delete non-existent patient with ID: {doctor_id}")
+            return JsonResponse({
+                'error': 'doctor not found'
+            }, status=404)
+        
+        #  Check for related appointments and delete them first
+        related_appointments = Appointment.objects.filter(doctor_id=doctor_id)
+        if related_appointments.exists():
+            logger.info(f"Deleting {related_appointments.count()} related appointments for doctor {doctor_id}")
+            related_appointments.delete()
+        
+        # Store doctor info for logging
+        doctor_info = f"ID: {doctor.id}, Name: {doctor.first_name} {doctor.last_name}"
+        
+        # Delete the doctor
+        doctor.delete()
+        
+        # Log successful deletion
+        logger.info(f"Successfully deleted doctor - {doctor_info}")
+        
+        return JsonResponse({
+            'message': 'Doctor deleted successfully',
+            'doctor_id': doctor_id
+        })
+        
+    except Exception as e:
+        # Log the error
+        logger.error(f"Error deleting doctor {doctor_id}: {str(e)}", exc_info=True)
+        
+        return JsonResponse({
+            'error': 'An error occurred while deleting the doctor'
+        }, status=500)       
