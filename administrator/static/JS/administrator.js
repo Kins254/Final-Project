@@ -443,55 +443,92 @@ async function deleteDoctor(doctorId) {
     //fetching the appointment's section
 
     async function AdminAppointmentFetch() {
-        try {
-          const id3 = document.getElementById('idFilterApp').value;
-          const patientID = document.getElementById('patientIdFilterApp').value;
-          const doctorID = document.getElementById('doctorIdFilterApp').value;
+      console.log("AdminAppointmentFetch function triggered");
+      console.log("Fetching appointments data...");
     
-         
-      
-          // Build query parameters string
-          const queryParams3 = new URLSearchParams();
-          if (id3) queryParams3.append('id', id3);
-          if (patientID) queryParams3.append('patient_id', patientID);
-          if (doctorID) queryParams3.append('doctor_id', doctorID);
-      
-          // Fetch filtered data from the server
-          const response = await fetch(`http://localhost:3000/Admin/appointments?${queryParams3.toString()}`);
-          const appointments = await response.json();
-      
-          const tbody = document.getElementById("TbodyAppAdmin");
-          tbody.innerHTML = ""; // Clear existing rows
-      
-          appointments.forEach((appointment) => {
-            const row = document.createElement("tr");
-            row.setAttribute("data-id", appointment.id); 
-      
-            // Populate row with patient data
-            row.innerHTML = `
-              <td>${appointment.id}</td>
-              <td>${appointment.patient_id}</td>
-              <td>${appointment.doctor_id}</td>
-              <td>${appointment.appointment_date}</td>
-              <td>${appointment.appointment_time}</td>
-              <td>${appointment.appointment_type}</td>
-              <td>${appointment.communication_type}</td>
-              <td>${appointment.payment_type}</td>
-              
-              <td>
-                <button class="edit-btn" onclick="editRow(${appointment.id})">Edit</button>
-                <button class="delete-btn" onclick="deleteAppointment(${appointment.id})">Delete</button>
+      try {
+        const id = document.getElementById('idFilterApp').value;
+        const patientId = document.getElementById('patientIdFilterApp').value;
+        const doctorId = document.getElementById('doctorIdFilterApp').value;
+        
+        // Build query parameters string
+        const queryParams = new URLSearchParams();
+        if (id) queryParams.append('id', id);
+        if (patientId) queryParams.append('patient_id', patientId);
+        if (doctorId) queryParams.append('doctor_id', doctorId);
+    
+        const url = `http://127.0.0.1:8000/administrator/view_appointments?${queryParams.toString()}`;
+        console.log("Fetching from URL:", url);
+    
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const responseData = await response.json();
+        console.log("Received appointments data:", responseData);
+    
+        // Extract the appointments array from the data property
+        const appointments = responseData.data;
+    
+        const tbody = document.getElementById("TbodyAppAdmin");
+        if (!tbody) {
+          throw new Error("Table body element not found!");
+        }
+        
+        tbody.innerHTML = ""; // Clear existing rows
+    
+        // Handle case where no appointments are found
+        if (!appointments || appointments.length === 0) {
+          const row = document.createElement("tr");
+          row.innerHTML = '<td colspan="9" class="text-center">No appointments found</td>';
+          tbody.appendChild(row);
+          return;
+        }
+    
+        appointments.forEach((appointment) => {
+          const row = document.createElement("tr");
+          row.setAttribute("data-id", appointment.id);
+    
+          // Safely handle potentially null or undefined values
+          const safeText = (text) => text || '';
+          
+          row.innerHTML = `
+            <td>${safeText(appointment.id)}</td>
+            <td>${safeText(appointment.patient_id)}</td>
+            <td>${safeText(appointment.doctor_id)}</td>
+            <td>${safeText(appointment.appointment_date)}</td>
+            <td>${safeText(appointment.appointment_time)}</td>
+            <td>${safeText(appointment.appointment_type)}</td>
+            <td>${safeText(appointment.communication_type)}</td>
+            <td>${safeText(appointment.payment_type)}</td>
+            <td>
+              <button class="edit-btn" onclick="editRow(${appointment.id})">Edit</button>
+              <button class="delete-btn" onclick="deleteAppointment(${appointment.id})">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+        
+        // Display error message to user
+        const tbody = document.getElementById("TbodyAppAdmin");
+        if (tbody) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="9" class="text-center text-red-500">
+                Error loading appointments: ${error.message}
               </td>
-            `;
-            tbody.appendChild(row);
-          });
-        } catch (error) {
-          console.error("Error fetching appointments:", error);
+            </tr>
+          `;
         }
       }
-      
-      // Call the fetch function when the page loads
-      window.onload = AdminAppointmentFetch;
+    }
+    
+    // Call the fetch function when the page loads
+    window.onload = AdminAppointmentFetch;
 
 
 

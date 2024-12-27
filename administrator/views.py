@@ -402,3 +402,94 @@ def delete_doctor(request, doctor_id):
         return JsonResponse({
             'error': 'An error occurred while deleting the doctor'
         }, status=500)       
+
+
+
+
+
+#Fetching Appointments section
+import logging
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+
+logger = logging.getLogger(__name__)
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def view_appointments(request):  # Fixed function name spelling
+    try:
+        # Get query parameters with correct names
+        appointment_id = request.GET.get("id")  # Changed from id3
+        doctor_id = request.GET.get("doctor_id")  # Changed from doctorID
+        patient_id = request.GET.get("patient_id")  # Changed from patientID
+        
+        # Log incoming request parameters
+        logger.debug(f"Fetch appointments request - ID: {appointment_id}, Doctor ID: {doctor_id}, Patient ID: {patient_id}")
+        
+        # Start with all appointments
+        appointments = Appointment.objects.all()
+        
+        # Apply filters if parameters are provided
+        if appointment_id:
+            try:
+                appointment_id = int(appointment_id)
+                appointments = appointments.filter(id=appointment_id)  # Fixed variable name
+            except ValueError:
+                return JsonResponse({
+                    'error': 'Invalid appointment ID format'
+                }, status=400)
+                
+        if doctor_id:
+            try:
+                doctor_id = int(doctor_id)
+                appointments = appointments.filter(doctor_id=doctor_id)  # Fixed variable name
+            except ValueError:
+                return JsonResponse({
+                    'error': 'Invalid doctor ID format'
+                }, status=400)
+                        
+        if patient_id:
+            try:
+                patient_id = int(patient_id)
+                appointments = appointments.filter(patient_id=patient_id)  # Fixed variable name
+            except ValueError:
+                return JsonResponse({
+                    'error': 'Invalid patient ID format'
+                }, status=400)
+            
+        # Check if any appointments were found
+        if not appointments.exists():
+            return JsonResponse({
+                'message': 'No appointments found matching the criteria',
+                'data': []
+            }, status=404)
+            
+        # Converting queryset to list of dictionaries
+        appointments_data = list(appointments.values(  # Fixed variable name
+            'id',
+            'patient_id',
+            'doctor_id',
+            'appointment_date',
+            'appointment_time',
+            'appointment_type',
+            'communication_type',
+            'payment_type'
+        ))
+        
+        return JsonResponse({
+            'message': 'Appointments retrieved successfully',
+            'data': appointments_data
+        })
+        
+    except Appointment.DoesNotExist:
+        logger.error("Appointments table does not exist")
+        return JsonResponse({
+            'error': 'Database table not found'
+        }, status=500)
+        
+    except Exception as e:
+        logger.error(f"An unexpected error occurred in fetching appointments: {str(e)}", exc_info=True)
+        return JsonResponse({
+            'error': 'An internal server error occurred'
+        }, status=500)

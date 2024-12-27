@@ -98,10 +98,10 @@
   <h1>ABOUT US</h1>
 <div class="aboutPhoto" style="background-image: url('{% static "Images/Doc2About.png" %}');"></div>
 <div class="aboutParagraph">
-  <h3>Redefining Healthcare, One Consultation at a Time.</h3>
-  <p> At TeleHealthConnect, we believe in making quality healthcare accessible to everyone. Our telemedicine platform connects you with experienced healthcare providers from the comfort of your home. With just a few clicks, you can consult with doctors, specialists, and mental health professionals, receive expert diagnoses, and get personalized treatment plans.</p>
-  <h3>Our Mission:</h3>
-  <ul>
+  <h3 class="head1">Redefining Healthcare, One Consultation at a Time.</h3>
+  <p class="paragraph1"> At TeleHealthConnect, we believe in making quality healthcare accessible to everyone. Our telemedicine platform connects you with experienced healthcare providers from the comfort of your home. With just a few clicks, you can consult with doctors, specialists, and mental health professionals, receive expert diagnoses, and get personalized treatment plans.</p>
+  <h3 class="head2">Our Mission:</h3>
+  <ul class="paragraph2">
     <li>To provide top-notch healthcare services that are convenient, affordable, and effective.</li>
     <li>
       To bridge the gap between patients and healthcare providers, ensuring timely and quality care.
@@ -111,14 +111,14 @@
     </li>
     
   </ul>
-  <h3>Why Choose Us?</h3>
-  <ul>
+  <h3 class="head3">Why Choose Us?</h3>
+  <ul class="paragraph3">
     <li>Convenience: Consult with doctors from anywhere, at any time.</li>
     <li>Privacy and Security: Your health information is our priority. We use advanced security measures to protect your data.</li>
     <li>Expert Care: Access a network of experienced and qualified healthcare providers.</li>
     <li>Affordable Care: Enjoy cost-effective healthcare solutions.</li>
   </ul>
-  <p>Experience the future of healthcare today. Book your appointment now!</p>
+  <p class="paragraph4">Experience the future of healthcare today. Book your appointment now!</p>
 </div>
 
 
@@ -181,22 +181,22 @@
     <section class="blog" id="blog">
       <h2>OUR BLOG</h2>
       <div id="blog-container">
-        <div class="blog-post">
+        <div class="blog-post" id="post1">
           <h3>Telemedicine: The Future of Healthcare</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, ullam.</p>
           <a href="#">Read More</a>
         </div>
-        <div class="blog-post">
+        <div class="blog-post" id="post2">
           <h3>How to Prepare for a Virtual Doctor Consultation</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, ullam.</p>
           <a href="#">Read More</a>
         </div>
-        <div class="blog-post">
+        <div class="blog-post" id="post3">
         <h3>Yellow Fever 2024 Report </h3>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         <a href="#">Read More</a>
         </div>
-        <div class="blog-post">
+        <div class="blog-post" id="post4">
           <h3>Mpox Report 2024</h3>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
           <a href="#">Read More</a>
@@ -246,7 +246,7 @@
   <li>How do I order medicine via the website?</li>
   <li>Can I get a prescription through telemedicine?</li>
   <li>Is the website account creation free?</li>
-  <li>How do i finnf a doctor</li>
+  <li>How do I find a doctor</li>
 </ul>
           </div>
          
@@ -256,7 +256,209 @@
         </div>
       </div>
     </section>
+
+   <!--scroll reveal-->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    ScrollReveal().reveal('#header,.aboutPhoto',{
+      delay:200,
+      reset: true,
+      distance:'100px',
+      origin:'bottom',
+      opacity:0,
+      
+      duration:2000
+    });
    
+  
+   
+    ScrollReveal().reveal('.header1',{
+      delay:600,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.header2',{
+      delay:750,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.otherContainer',{
+      delay:1000,
+      reset: true,
+      distance:'80px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.paragraph',{
+      delay:900,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.head1',{
+      delay:400,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.paragraph1',{
+      delay:500,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.head2',{
+      delay:600,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.paragraph2',{
+      delay:700,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.head3',{
+      delay:800,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.paragraph3',{
+      delay:900,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.paragraph4',{
+      delay:1000,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+   
+   
+    
+
+    ScrollReveal().reveal('#container',{
+      delay:200,
+      reset: true,
+      distance:'50px',
+      origin:'right',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.twoDiv',{
+      delay:500,
+      reset: true,
+      distance:'50px',
+      origin:'right',
+      opacity:0,
+      duration:2500
+    }); 
+    ScrollReveal().reveal('.threeDiv',{
+      delay:700,
+      reset: true,
+      distance:'50px',
+      origin:'right',
+      opacity:0,
+      duration:2500
+    });
+    
+    ScrollReveal().reveal('.fourDiv',{
+      delay:900,
+      reset: true,
+      distance:'50px',
+      origin:'right',
+      opacity:0,
+      duration:2500
+    });
+   
+    ScrollReveal().reveal('#post1',{
+      delay:200,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('#post2',{
+      delay:400,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('#post3',{
+      delay:600,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      
+      duration:2500
+    });
+    ScrollReveal().reveal('#post4',{
+      delay:800,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.footerPartnership',{
+      delay:200,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.footerCompany',{
+      delay:300,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+    ScrollReveal().reveal('.footerFAQ',{
+      delay:400,
+      reset: true,
+      distance:'50px',
+      origin:'bottom',
+      opacity:0,
+      duration:2500
+    });
+  });
+  </script>
    
 </body>
 </html>
