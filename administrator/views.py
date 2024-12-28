@@ -407,6 +407,9 @@ def delete_doctor(request, doctor_id):
 
 
 
+
+
+
 #Fetching Appointments section
 import logging
 from django.http import JsonResponse
@@ -493,3 +496,167 @@ def view_appointments(request):  # Fixed function name spelling
         return JsonResponse({
             'error': 'An internal server error occurred'
         }, status=500)
+        
+        
+ 
+#The Dashboard section
+# Overall statistics
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+
+
+@require_http_methods(["GET"])
+def overall_stats(request):
+   
+    try:
+        stats = {
+            "total_patients": Patients.objects.all().count(),
+            "total_doctors": Doctors.objects.all().count(),
+            "total_appointments": Appointment.objects.all().count(),
+            "pending_appointments": Appointment.objects.filter(status="Pending").count(),
+            "completed_appointments": Appointment.objects.filter(status="Completed").count()
+        }
+        
+        return JsonResponse(stats)
+    except Exception as e:
+        print(f"Error in stats view: {e}")  # Debug print
+        return JsonResponse({"error": str(e)}, status=500)
+ 
+ 
+ 
+ 
+ 
+ #Gender pie chart
+from django.http import JsonResponse
+from django.db.models import Count
+
+def gender_pieChart(request):
+    # Aggregating patient gender counts
+    gender_stats = Patients.objects.values('gender').annotate(count=Count('gender'))
+
+    # Initialize counts
+    male_count = 0
+    female_count = 0
+
+    # Extract counts for each gender
+    for item in gender_stats:
+        if item['gender'] == 'Male':
+            male_count = item['count']
+        elif item['gender'] == 'Female':
+            female_count = item['count']
+
+    # Return the data as JSON
+    data = {
+        "male": male_count,
+        "female": female_count
+    }
+    return JsonResponse(data)
+ 
+ 
+ 
+
+ 
+ 
+ 
+#For Doctors specialization
+ 
+def doctor_specialization(request):
+     #Aggregating doctor specialization counts
+     specialization_stats=Doctors.objects.values('specialization').annotate(count=Count('specialization'))
+     
+     #Initiate counts
+     general_count=0
+     pediatric_count=0
+     dermatology_count=0
+     emergency_count=0
+     nutrition_and_dietetic_count=0
+     infectious_disease_count=0
+     
+     #Extract counts for each specialization
+     for item in specialization_stats:
+         if item['specialization']=='General':
+             general_count=item['count']
+         if item['specialization']=='Pediatric':
+             pediatric_count=item['count'] 
+         if item['specialization']=='Dermotology':
+             dermatology_count=item['count']
+         if item['specialization']=='Emergency':
+             emergency_count=item['count']
+         if item['specialization']=='Nutrition and Dietietic':
+             nutrition_and_dietetic_count=item['count']
+         if item['specialization']=='Infectious Disease':
+             infectious_disease_count=item['count']                  
+     
+     #Return as JSON file
+     data={
+            "General":general_count,
+            "Pediatric":pediatric_count,
+            "Dermotology":dermatology_count,
+            "Emergency":emergency_count,
+            "Nutrition and Dietetic":nutrition_and_dietetic_count,
+            "Infectious Disease":infectious_disease_count
+     }
+     return JsonResponse(data)
+ 
+ 
+#For Monthly Appointments (Line Chart) 
+
+from django.db.models.functions import TruncMonth
+from django.db.models import Count
+
+def monthly_appointment(request):
+    # Group appointments by month and count them
+    monthly_appointments = (
+        Appointment.objects.annotate(month=TruncMonth('appointment_date'))
+        .values('month')
+        .annotate(count=Count('id'))
+        .order_by('month')
+    )
+    
+    # Format data for the response
+    data = {
+        "months": [item['month'].strftime('%B %Y') for item in monthly_appointments],
+        "counts": [item['count'] for item in monthly_appointments]
+    }
+    
+    return JsonResponse(data)
+
+
+     
+     
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#For Patients Registration Trends
+from django.http import JsonResponse
+from django.db.models.functions import TruncMonth
+from django.db.models import Count
+
+def patient_registration_trend(request):
+    # Group registrations by month
+    monthly_registrations = (
+        Patients.objects.annotate(month=TruncMonth('registration_date'))
+        .values('month')
+        .annotate(count=Count('id'))
+        .order_by('month')
+    )
+
+    # Format data
+    data = {
+        "months": [item['month'].strftime('%B %Y') for item in monthly_registrations],
+        "counts": [item['count'] for item in monthly_registrations]
+    }
+    
+    return JsonResponse(data)
+
+  

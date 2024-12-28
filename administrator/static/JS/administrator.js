@@ -139,6 +139,7 @@ async function AdminPatientsFetch() {
 
 // Call the fetch function when the page loads
 window.onload = AdminPatientsFetch;
+setInterval(AdminPatientsFetch, 30000);
   
 
 
@@ -266,6 +267,7 @@ async function deletePatient(patientId) {
   
   // Call the fetch function when the page loads
   window.onload = AdminDoctorsFetch;
+  setInterval(AdminDoctorsFetch, 30000);
 
 
 
@@ -529,6 +531,7 @@ async function deleteDoctor(doctorId) {
     
     // Call the fetch function when the page loads
     window.onload = AdminAppointmentFetch;
+    setInterval(AdminAppointmentFetch, 30000);
 
 
 
@@ -635,6 +638,377 @@ document.getElementById('logout').addEventListener('click', function() {
   // Redirect to login page or home page
   window.location.href = 'http://127.0.0.1:8000/authentication/signIn/'; // or your homepage URL
 });
+
+
+
+//For dashboard
+// stats.js
+async function fetchStats() {
+  console.log('Fetching stats...');
+  try {
+      const response = await fetch('http://127.0.0.1:8000/administrator/overall_stats/');
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Stats data:', data);
+
+      // Update DOM elements
+      document.getElementById('total-patients').textContent = `Total Patients ${data.total_patients}`;
+      document.getElementById('total-doctors').textContent = `Total Doctors ${data.total_doctors}`;
+      document.getElementById('total-appointments').textContent = `Total Appointments ${data.total_appointments}`;
+      document.getElementById('pending-appointments').textContent = `Pending Appointments ${data.pending_appointments}`;
+      document.getElementById('completed-appointments').textContent = `Completed Appointments ${data.completed_appointments}`;
+
+  } catch (error) {
+      console.error('Error:', error);
+      document.querySelectorAll('.stats .card').forEach(card => {
+          card.textContent = 'Error loading stats';
+          card.style.color = 'red';
+      });
+  }
+}
+
+// Initial fetch and interval
+document.addEventListener('DOMContentLoaded', () => {
+  fetchStats();
+  setInterval(fetchStats, 30000);
+});
+
+
+
+//For patients pie chart
+let genderChart;
+
+// Fetch the gender data from the server
+async function fetchGenderData() {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/administrator/gender_pieChart/');
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch gender data');
+        }
+        
+        const data = await response.json();
+        updateGenderChart(data);  // Update the chart with the new data
+    } catch (error) {
+        console.error('Error fetching gender data:', error);
+    }
+}
+
+// Create the pie chart
+function createGenderChart(data) {
+    const ctx = document.getElementById('genderChart').getContext('2d');
+    genderChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Male', 'Female'],
+            datasets: [{
+                label: 'Patient Gender Distribution',
+                data: [data.male, data.female],  // Using the fetched data
+                backgroundColor: ['#36A2EB', '#FF6384'],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return `${tooltipItem.label}: ${tooltipItem.raw}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Update the chart with new data
+function updateGenderChart(data) {
+    if (genderChart) {
+        genderChart.data.datasets[0].data = [data.male, data.female];
+        genderChart.update();  // Update the chart when data changes
+    } else {
+        createGenderChart(data);  // Create the chart on first load
+    }
+}
+
+// Initial fetch and chart rendering
+fetchGenderData();
+
+// Optionally, you can refresh the chart data periodically (e.g., every 30 seconds)
+setInterval(fetchGenderData, 30000);  // Fetch new data every 30 seconds
+
+
+//Doctors specialization bar chart
+document.addEventListener("DOMContentLoaded", () => {
+  const ctx = document.getElementById("specializationBarChart").getContext("2d");
+  let barChart;
+
+  // Function to fetch data and update the chart
+  const fetchAndUpdateChart = () => {
+    fetch("http://127.0.0.1:8000/administrator/doctor_specialization/")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Specialization data:", data);
+
+        const labels = Object.keys(data);
+        const values = Object.values(data);
+
+        if (barChart) {
+          // Update chart data
+          barChart.data.labels = labels;
+          barChart.data.datasets[0].data = values;
+          barChart.update(); // Refresh the chart
+        } else {
+          // Initialize the chart
+          barChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: "Number of Doctors",
+                  data: values,
+                  backgroundColor: [
+                    "#FF6384", // General
+                    "#36A2EB", // Pediatric
+                    "#FFCE56", // Dermatology
+                    "#4BC0C0", // Emergency
+                    "#9966FF", // Nutrition and Dietetic
+                    "#FF9F40"  // Infectious Disease
+                  ],
+                  borderColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56",
+                    "#4BC0C0",
+                    "#9966FF",
+                    "#FF9F40"
+                  ],
+                  borderWidth: 1
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  display: false
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      return `${context.label}: ${context.raw} doctors`;
+                    }
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: "Specializations"
+                  }
+                },
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: "Number of Doctors"
+                  }
+                }
+              }
+            }
+          });
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching specialization data:", error);
+      });
+  };
+
+  // Fetch data immediately when the page loads
+  fetchAndUpdateChart();
+
+  // Set an interval to fetch data every 60 seconds
+  setInterval(fetchAndUpdateChart, 60000); // 60000 ms = 1 minute
+});
+
+
+
+//For appointments line chart
+document.addEventListener("DOMContentLoaded", () => {
+  const ctx = document.getElementById("monthlyAppointmentsChart").getContext("2d");
+  let appointmentChart;
+
+  // Function to fetch data and update the chart
+  const fetchAndUpdateMonthlyAppointments = () => {
+    fetch("http://127.0.0.1:8000/administrator/monthly_appointment/")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Monthly appointment data:", data);
+
+        const labels = data.months;
+        const values = data.counts;
+
+        if (appointmentChart) {
+          // Update chart data
+          appointmentChart.data.labels = labels;
+          appointmentChart.data.datasets[0].data = values;
+          appointmentChart.update();
+        } else {
+          // Initialize the chart
+          appointmentChart = new Chart(ctx, {
+            type: "bar", // You can change this to 'line' for a line chart
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: "Number of Appointments",
+                  data: values,
+                  backgroundColor: "#36A2EB",
+                  borderColor: "#2176C7",
+                  borderWidth: 1
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  display: false
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      return `${context.label}: ${context.raw} appointments`;
+                    }
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: "Month"
+                  }
+                },
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: "Number of Appointments"
+                  }
+                }
+              }
+            }
+          });
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching monthly appointment data:", error);
+      });
+  };
+
+  // Fetch data immediately when the page loads
+  fetchAndUpdateMonthlyAppointments();
+
+  // Set an interval to fetch data every 5 minutes
+  setInterval(fetchAndUpdateMonthlyAppointments, 300000); // 300000 ms = 5 minutes
+});
+
+
+
+//For Patient Registration trends
+document.addEventListener("DOMContentLoaded", () => {
+  const ctx = document.getElementById("registrationTrendChart").getContext("2d");
+  let registrationChart;
+
+  const fetchAndUpdateRegistrationTrend = () => {
+    fetch("http://127.0.0.1:8000/administrator/patient_registration_trend/")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const labels = data.months;
+        const values = data.counts;
+
+        if (registrationChart) {
+          // Update chart data
+          registrationChart.data.labels = labels;
+          registrationChart.data.datasets[0].data = values;
+          registrationChart.update();
+        } else {
+          // Initialize the chart
+          registrationChart = new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: "Patient Registrations",
+                  data: values,
+                  backgroundColor: "rgba(75, 192, 192, 0.2)",
+                  borderColor: "rgba(75, 192, 192, 1)",
+                  borderWidth: 1,
+                  fill: true
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  display: true
+                }
+              },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: "Month"
+                  }
+                },
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: "Number of Registrations"
+                  }
+                }
+              }
+            }
+          });
+        }
+      })
+      .catch(error => console.error("Error fetching registration trend data:", error));
+  };
+
+  fetchAndUpdateRegistrationTrend();
+
+  setInterval(fetchAndUpdateRegistrationTrend, 300000); // Refresh every 5 minutes
+});
+
+
 
 
 

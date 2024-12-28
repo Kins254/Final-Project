@@ -10,6 +10,7 @@ class Patients(models.Model):
     date_of_birth=models.DateField()
     gender=models.CharField(max_length=10)
     address=models.CharField(max_length=255)
+    registration_date = models.DateTimeField(auto_now_add=True)  
     
 
     class Meta:
@@ -47,7 +48,7 @@ class Admin(models.Model):
         db_table = 'admin'
 
 
-class Appointment(models.Model):  # Capitalized!
+class Appointment(models.Model):  
     id = models.AutoField(primary_key=True)
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE, related_name='appointments')
     doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE, related_name='appointments')
@@ -63,3 +64,4 @@ class Appointment(models.Model):  # Capitalized!
     
     class Meta:
         db_table = 'appointments'
+

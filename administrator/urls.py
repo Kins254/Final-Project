@@ -10,6 +10,11 @@ urlpatterns = [
      path('delete_patient/<int:patient_id>/',views.delete_patient,name='delete_patient'),
      path('delete_doctor/<int:doctor_id>/',views.delete_doctor,name='delete_doctor'),
      path('view_appointments',views.view_appointments,name='view_appointments'),
+     path('overall_stats/',views.overall_stats,name="overall_stats"),
+     path('gender_pieChart/',views.gender_pieChart,name='gender_pieChart'),
+     path('doctor_specialization/',views.doctor_specialization,name='doctor_specialization'),
+     path('monthly_appointment/',views.monthly_appointment,name='monthly_appointment'),
+     path('patient_registration_trend/',views.patient_registration_trend,name='patient_registration_trend'),
 
     # ... other URL patterns
 ]
