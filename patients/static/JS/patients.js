@@ -18,24 +18,7 @@ else{
 console.log("Type In patient section:", userType);
 console.log("Patient Id:", patient_id);
 console.log("Patient's First name:", first_name);
-/*
-window.handleUserSession = function(userData) {
-  // Store patient-specific session information
-  sessionStorage.setItem('userId', userData.user_id);
-  sessionStorage.setItem('userType', userData.user_type);
-  sessionStorage.setItem('email', userData.email);
-  sessionStorage.setItem('firstName', userData.first_name);
-  sessionStorage.setItem('lastName', userData.last_name);
-  console.log(`patient id is {userId}`)
 
-  const patient_id = sessionStorage.getItem('userId');
-  //const patient_id = 2;
-  const first_name = sessionStorage.getItem('firstName');
-  console.log(`Patient ID is ${patient_id}`);
-  console.log(`Patient first name is ${first_name}`);
-  // Additional patient-specific session handling
-  console.log('Patient session initialized');
-}
   
 ///Header greetings
  // Function to get the current greeting based on time
@@ -44,20 +27,20 @@ window.handleUserSession = function(userData) {
   let greeting;
 
   if (currentHour >= 5 && currentHour < 12) {
-      greeting = "Good morning";
+      greeting = "Good morning,";
   } else if (currentHour >= 12 && currentHour < 18) {
-      greeting = "Good afternoon";
+      greeting = "Good afternoon,";
   } else {
-      greeting = "Good evening";
+      greeting = "Good evening,";
   }
 
   return greeting;
 }
 
-const greetingsElement=document.getElementById('greetingsPat');
+const greetingsElement=document.querySelector('.greetingsPat');
 greetingsElement.textContent= `${getGreeting()}`
 
-const usernames=document.getElementById('usernamePat');
+const usernames=document.querySelector('#usernamePat');
 const username1= first_name;
 
 if (username1) {
@@ -65,7 +48,7 @@ if (username1) {
 } else {
   usernames.textContent = `Guest!`; // Fallback if no name is stored
 }
-*/
+
 
 //function to book an appointment
 document.getElementById("appointmentForm").addEventListener("submit", function (event) {

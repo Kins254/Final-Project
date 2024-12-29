@@ -77,25 +77,58 @@
        <div class="TheContent">
         <div class="slidingContent" id="dashboardContent">
           <div class="stats">
-            <div class="card" id="total-patients">Total Patients </div>
-            <div class="card" id="total-doctors">Total Doctors </div>
-            <div class="card" id="total-appointments">Total Appointments </div>
-            <div class="card" id="pending-appointments">Pending Appointments: </div>
-            <div class="card" id="completed-appointments">Completed Appointments: </div>
+            <div class="card" >
+              <div class="cardContent">Total Patients </div> 
+              <div id="total-patients"> </div> 
+            </div>
+            <div class="card" >
+              <div class="cardContent">Total Doctors </div> 
+              <div id="total-doctors"> </div> 
+            </div>
+            <div class="card" >
+               <div class="cardContent">Total Appointments </div>
+                <div id="total-appointments"> </div> 
+              </div>
+            <div class="card" >
+               <div class="cardContent">Pending Appointments </div> 
+               <div id="pending-appointments"> </div> 
+              </div>
+            <div class="card" >
+              <div class="cardContent">Completed Appointments </div>
+               <div id="completed-appointments"> </div> </div>
         </div>
-        <div class="chart-container" id="pieChart">
-          <canvas id="genderChart" width="100" height="100"></canvas>
-          <h1>Doctor Specializations</h1>
-          <canvas id="specializationBarChart" width="100" height="100"></canvas>
-          <canvas id="monthlyAppointmentsChart" width="400" height="200"></canvas>
-          <canvas id="registrationTrendChart" width="400" height="200"></canvas>
+        <div class="chart-container" >
+          <div id="pieChart"> 
+            <h1>Patients Gender Distribution</h1>
+            <canvas id="genderChart" ></canvas>
+
+          </div>
+          <div id="barChart">
+            <h1>Doctor Specializations</h1>
+          <canvas id="specializationBarChart" ></canvas>
+
+          </div>
+          <div id="appointmentChart">
+            <h1>Appointment Distribution</h1>
+            <canvas id="monthlyAppointmentsChart"></canvas>
+
+          </div>
+          <div id="registrationChart">
+            <h1>Patient Registration Distribution</h1>
+            <canvas id="registrationTrendChart" ></canvas>
+
+          </div>
+
+
+          
+          
+         
+         
 
 
 
       </div>
-      <div class="chart-container" id="barChart">
-       
-      </div>
+     
           
         </div>
         <div class="slidingContent" id="patientsContent">

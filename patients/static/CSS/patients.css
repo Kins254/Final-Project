@@ -1,3 +1,6 @@
+body{
+  font-family:poppins;
+}
 .Patient {
   position: absolute;
   height: 100vh;
@@ -64,15 +67,15 @@
 .greetingsPat {
   position: absolute;
   top: 28%;
-  font-size: 1.3em;
+  font-size: 1.05em;
   left: 7%;
   color: aliceblue;
 }
 #usernamePat {
   position: absolute;
   top: 28%;
-  font-size: 1.3em;
-  left: 60%;
+  font-size: 1.05em;
+  left: 70%;
   color: aliceblue;
 }
 .containerPat {
@@ -678,32 +681,177 @@ margin-top: 5%;
 }
 
 /* pharmacy section */
+.trolly{
+  position:absolute;
+  height:12.5%;
+  width:7%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  top:2%;
+  right:5%;
+  background-color: transparent;
+  z-index:100;
 
-.graphPat {
-  position: absolute;
-  height: 45%;
-  width: 30%;
-  top: 5%;
-  background-color: aliceblue;
-  border-radius: 5px;
+}
+.trolly img{
+  position:absolute;
+  height:100%;
+  width:100%;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  box-shadow: 3px 4px 7px 0px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 3px 4px 7px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 3px 4px 7px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
 }
-.graphPat:hover {
-  transform: scale(1.02);
+.searchBar{
+  position:absolute;
+  height:7%;
+  width:40%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  top:5%;
+  left:30%;
 }
-#graphPat1 {
-  left: 2%;
+.searchBar input{
+  position:absolute;
+  height:100%;
+  width:100%;
+  border-radius: 10px;
+  border:none;
+  padding:5px;
+  text-indent: 35%;
 }
-#graphPat2 {
-  left: 35%;
+.searchBar input:focus ~ i {
+  display: none;
 }
-#graphPat3 {
-  left: 68%;
+
+.searchBar i{
+  position:absolute;
+  height:20%;
+  width:10%;
+  left:15%;
+  top:30%;
+  z-index:1;
 }
+.prescription{
+  position:absolute;
+  height:8.5%;
+  width:5%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  left:5%;
+  top:5%;
+  background-color: honeydew;
+  border-radius: 50%;
+  cursor:pointer;
+  transition:all 0.3s ease;
+}
+.prescription:hover{
+  background-color: #737a73;
+}
+#prescriptionIcon{
+  position: absolute;
+  height:100%;
+  width:100;
+  cursor:pointer;
+   top:25%;
+   font-size: 1.5em;
+}
+.DrugsContainer{
+  position:absolute;
+  height:85%;
+  width:98%;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-evenly;
+  gap:10px;
+  align-items:center;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  top:18%;
+  left:2%;
+  overflow-y: scroll;
+ 
+}
+.item{
+  flex: 1 1  150px; /* Grow, shrink, and set a base width of 200px */
+  background-color: lightblue;
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 20px;
+  min-height: 200px;
+  max-width:150px;
+  border-radius: 5px;
+  position:relative;
+  transition:all 0.3s ease;
+  cursor: pointer;
+}.item:hover{
+  transform:scale(1.05)
+}
+.ImageContainer {
+  position: absolute;
+  overflow: hidden;
+  height: 60%;
+  display: flex;
+  left: 0%;
+  top: 0%;
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
+/* If your images are direct children, also add this */
+.ImageContainer img {
+  display: block;
+  margin: auto;
+  object-fit: cover;
+  max-width: 100%;
+  height: 100%;
+}
+.Description{
+  position:absolute;
+  height:20%;
+  width:90%;
+  font-family:poppins;
+  overflow: hidden;
+  font-weight:500;
+  top:75%;
+  display:flex;
+  text-align: center;
+  text-wrap: wrap;
+}
+.price{
+  position:absolute;
+  top:62%;
+  left:10%;
+  height:10%;
+  width:45%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-weight:600;
+  font-family:poppins;
+  color:maroon;
+  background-color: transparent;
+}
+.chart{
+  position:absolute;
+  top:62%;
+  right:5%;
+  font-size:1.3em;
+
+}
+.chart:hover{
+  color:rgb(118, 129, 129)
+}
+
+
+
 
 /* eEmergency section */
 #emergencyContent{
@@ -930,7 +1078,7 @@ gap:5%;
   left: 40%;
   border-radius: 5px;
   z-index: 100;
-  transform: translate(-180%, 0);
+  transform: translate(-1800%, 0);
   opacity: 0;
   transition: all 0.9s ease-out;
 }

@@ -16,10 +16,10 @@ else{
 }
 
 console.log("Type In patient section:", userType);
-console.log("Admin Id:", admin_id);
+
 console.log("Admin's First name:", first_name);
 
-/*
+
 ///Header greetings
  // Function to get the current greeting based on time
  function getGreeting() {
@@ -27,29 +27,29 @@ console.log("Admin's First name:", first_name);
   let greeting;
 
   if (currentHour >= 5 && currentHour < 12) {
-      greeting = "Good morning";
+      greeting = "Good morning, ";
   } else if (currentHour >= 12 && currentHour < 18) {
-      greeting = "Good afternoon";
+      greeting = "Good afternoon, ";
   } else {
-      greeting = "Good evening";
+      greeting = "Good evening, ";
   }
 
   return greeting;
 }
 
-const greetingsElement=document.getElementById('greetingsPat');
+const greetingsElement=document.querySelector('.greetings');
 greetingsElement.textContent= `${getGreeting()}`
 
-const usernames=document.getElementById('usernamePat');
+const usernames=document.querySelector('#username');
 const username1= first_name;
 
 if (username1) {
   usernames.textContent = ` ${username1}!`;
 } else {
-  usernames.textContent = `Guest!`; // Fallback if no name is stored
+  usernames.textContent = ` Guest!`; // Fallback if no name is stored
 }
 
-*/
+
 
 
 //fetching the patients data
@@ -69,7 +69,7 @@ async function AdminPatientsFetch() {
     if (phone) queryParams.append('phone', phone);
 
     const url = `http://127.0.0.1:8000/administrator/fetch_patients?${queryParams.toString()}`;
-    console.log("Fetching from URL:", url);
+    
 
     const response = await fetch(url);
     
@@ -78,7 +78,6 @@ async function AdminPatientsFetch() {
     }
     
     const responseData = await response.json();
-    console.log("Received patients data:", responseData);
 
     // Extract the patients array from the data property
     const patients = responseData.data;
@@ -183,8 +182,7 @@ async function deletePatient(patientId) {
   //fetching the doctor's section
 
   async function AdminDoctorsFetch() {
-    console.log("AdminDoctorsFetch function triggered");
-    console.log("Fetching doctors data...");
+    
     
     try {
       const id = document.getElementById('idFilterDoc').value;
@@ -198,7 +196,6 @@ async function deletePatient(patientId) {
       if (phone) queryParams.append('phone', phone);
   
       const url = `http://127.0.0.1:8000/administrator/fetch_doctors?${queryParams.toString()}`;
-      console.log("Fetching from URL:", url);
   
       const response = await fetch(url);
       
@@ -207,7 +204,6 @@ async function deletePatient(patientId) {
       }
       
       const responseData = await response.json();
-      console.log("Received doctors data:", responseData);
   
       // Extract the doctors array from the data property
       const doctors = responseData.data;
@@ -368,7 +364,6 @@ document.querySelector(".DocAdding").addEventListener("submit", function (event)
       password
     };
     
-    console.log('Sending data:', data);  // Log the data being sent
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     fetch('http://127.0.0.1:8000/administrator/doctor_account/', {
@@ -385,7 +380,6 @@ document.querySelector(".DocAdding").addEventListener("submit", function (event)
         return response.json();
       })
       .then(data => {
-        console.log('Response data:', data);
         if (data.success) {
           alert('Registration successful! ');
             // Optionally clear the form:
@@ -445,8 +439,7 @@ async function deleteDoctor(doctorId) {
     //fetching the appointment's section
 
     async function AdminAppointmentFetch() {
-      console.log("AdminAppointmentFetch function triggered");
-      console.log("Fetching appointments data...");
+    
     
       try {
         const id = document.getElementById('idFilterApp').value;
@@ -460,7 +453,6 @@ async function deleteDoctor(doctorId) {
         if (doctorId) queryParams.append('doctor_id', doctorId);
     
         const url = `http://127.0.0.1:8000/administrator/view_appointments?${queryParams.toString()}`;
-        console.log("Fetching from URL:", url);
     
         const response = await fetch(url);
         
@@ -469,7 +461,6 @@ async function deleteDoctor(doctorId) {
         }
         
         const responseData = await response.json();
-        console.log("Received appointments data:", responseData);
     
         // Extract the appointments array from the data property
         const appointments = responseData.data;
@@ -594,7 +585,6 @@ document.getElementById("updateAccountFormAdmin").addEventListener("submit", fun
             newpassword: newPassword,
             userId:admin_id
         };
-        console.log('Sending data:', data3);
         
         fetch('http://localhost:3000/AccountEditAdmin', {
             method: 'PUT',
@@ -654,14 +644,13 @@ async function fetchStats() {
       }
       
       const data = await response.json();
-      console.log('Stats data:', data);
 
       // Update DOM elements
-      document.getElementById('total-patients').textContent = `Total Patients ${data.total_patients}`;
-      document.getElementById('total-doctors').textContent = `Total Doctors ${data.total_doctors}`;
-      document.getElementById('total-appointments').textContent = `Total Appointments ${data.total_appointments}`;
-      document.getElementById('pending-appointments').textContent = `Pending Appointments ${data.pending_appointments}`;
-      document.getElementById('completed-appointments').textContent = `Completed Appointments ${data.completed_appointments}`;
+      document.getElementById('total-patients').textContent = ` ${data.total_patients}`;
+      document.getElementById('total-doctors').textContent = ` ${data.total_doctors}`;
+      document.getElementById('total-appointments').textContent = ` ${data.total_appointments}`;
+      document.getElementById('pending-appointments').textContent = ` ${data.pending_appointments}`;
+      document.getElementById('completed-appointments').textContent = ` ${data.completed_appointments}`;
 
   } catch (error) {
       console.error('Error:', error);
@@ -716,6 +705,9 @@ function createGenderChart(data) {
         options: {
             responsive: true,
             plugins: {
+                legend:{
+                  position:'right'
+                },
                 tooltip: {
                     callbacks: {
                         label: function(tooltipItem) {
@@ -760,7 +752,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then(data => {
-        console.log("Specialization data:", data);
 
         const labels = Object.keys(data);
         const values = Object.values(data);
@@ -862,7 +853,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then(data => {
-        console.log("Monthly appointment data:", data);
 
         const labels = data.months;
         const values = data.counts;
