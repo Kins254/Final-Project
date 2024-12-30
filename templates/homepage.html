@@ -33,13 +33,22 @@
     <p class="WebName">TeleHealthConnect</p>
     <div class="contactInfo">
       <div class="phoneNumber" >
-        <i class="fa-solid fa-phone"></i>
+        <i class="fa-solid fa-phone" ></i>
         <a href="tel:+254704004046">+254704004046</a>
       </div>
+      <div class="phoneNumber2" >
+        
+        <a href="tel:+254704004046"><i class="fa-solid fa-phone" ></i></a>
+      </div>
       <div class="email">
-        <i class="fa-regular fa-envelope"></i>
+        <i class="fa-regular fa-envelope" ></i>
         <a href ="mailto:erickgitau250@gmail.com">erickgitau250@gmail.com</a>
       </div>
+      <div class="email2">
+        
+        <a href ="mailto:erickgitau250@gmail.com"><i class="fa-regular fa-envelope" ></i></a>
+      </div>
+      
       <div class="facebook">
         <i class="fa-brands fa-facebook-f"></i>
       </div>
@@ -55,11 +64,20 @@
       <a href="#about">ABOUT US</a>
       <a href="#products">PRODUCTS AND SERVICES</a>
       <a href="#blog">BLOG</a>
-       
-      
-     
-      
+ 
     </div>
+    <div class="dropDown">
+      <i class="fa-solid fa-bars"></i>
+      <ul  class="dropdownContent">
+      <li><a href="#home">HOME</a> </li>
+      <li><a href="#about">ABOUT US</a></li>
+      <li><a href="#products">PRODUCTS AND SERVICES</a></li>
+      <li><a href="#blog">BLOG</a></li>
+      <li><a  href="http://127.0.0.1:8000/authentication/signIn/" target="_blank">PORTAL</li>
+
+      </ul>
+    </div>
+
     <div class="portalCont">
       <a class="portal2" href="http://127.0.0.1:8000/authentication/signIn/" target="_blank"> 
         <p>PORTAL</p>
@@ -68,16 +86,7 @@
         </div>
       </a>
     </div>
-    <div class="dropdown">
-      <button class="menu"  > <i id="menuicon"  class="fa-solid fa-bars"></i></button>
-      <div class="dropdown-content">
-        <a href="#home">HOME</a>
-        <a href="#about">ABOUT US</a>
-        <a href="#products">PRODUCTS AND SERVICES</a>
-        <a href="#blog">BLOG</a>
-        
-      </div>
-  </div>
+    
 </div>
 
        <div class="HeadersParagraph">
@@ -130,50 +139,43 @@
 
         <div class="oneDiv"> 
            <a href="#" target="_blank" id="one" class="div" style="background-image: url('{% static "Images/doctor.jpg" %}');"> 
-          <div >
-            <p>DOCTOR CONSULTATION</p>
+          <div class="title" >
+            <p >DOCTOR CONSULTATION</p>
           </div>
-        </a>
-        <p class="DivParagraph">Access quality healthcare from anywhere, anytime. Our telemedicine platform connects you with top doctors for expert consultations, diagnoses, and personalized treatment plans.</p>
-      </div>
+           </a>
+             <p class="DivParagraph">Access quality healthcare from anywhere, anytime. Our telemedicine platform connects you with top doctors for expert consultations, diagnoses, and personalized treatment plans.</p>
+        </div>
         <div class="twoDiv">
           <a href="#" id="two" class="div" target="_blank" style="background-image: url('{% static "Images/pharmarcy.jpg" %}');">
-            <div >
-              <p>PHARMARCY</p>
+            <div class="title2">
+              <p >PHARMARCY</p>
             </div>
           </a>
-          <div class="DivParagraph">
+           <div class="DivParagraph2">
             Need medication? No problem. Our pharmacy services bring prescriptions directly to you. Simply upload your prescription, and our licensed pharmacists will review and process your order. We'll deliver your medication  securely, ensuring you always have access to the care you need.
-          </div>
+           </div>
         </div>
         <div class="threeDiv">
           <a href="#" id="three" class="div" target="_blank" style="background-image: url('{% static "Images/therapy.jpg" %}');">
-            <div >
-              <p>THERAPY</p>
+            <div class="title3">
+              <p >THERAPY</p>
             </div>
           </a>
-          <div class="DivParagraph">
+          <div class="DivParagraph3">
             Need emotional support? Our experienced therapists offer confidential online counseling and therapy sessions. Addressng  anxiety, depression, stress, and relationship issues. Experience the benefits of professional therapy from the comfort of your home.
           </div>
         </div>
         <div class="fourDiv"> 
           <a href="#" id="four" class="div" target="_blank" style="background-image: url('{% static "Images/ambulance.jpg" %}');">
-            <div >
-              <p>URGENT CARE</p>
+            <div class="title4">
+              <p >URGENT CARE</p>
             </div>
           </a>
-          <div class="DivParagraph" >
+          <div class="DivParagraph4" >
             Experiencing a medical emergency? Our platform helps you connect with immediate medical assistance. Locate and contact the nearest ambulance service with just a few clicks. Our dedicated team is available 24/7 to provide guidance and support during emergencies.
           </div>
         </div>
       
-        
-       
-        
-        
-       
-        
-        
       </div>
 
       
@@ -227,7 +229,7 @@
             </ul>
           </div>
           <div class="footerCompany">
-            <h3>COMPANY</h3>
+            <h3>COMPANY LINKS</h3>
          <ul>
      <li><a href="">CONTACT US</a></li>
      <li> <a href="">ABOUT US</a></li>
@@ -261,203 +263,86 @@
 <script src="https://unpkg.com/scrollreveal"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded',function(){
-    ScrollReveal().reveal('#header,.aboutPhoto',{
-      delay:200,
+  document.addEventListener('DOMContentLoaded', function () {
+    const commonSettings = {
       reset: true,
-      distance:'100px',
-      origin:'bottom',
-      opacity:0,
-      
-      duration:2000
-    });
-   
+      distance: '50px',
+      origin: 'bottom',
+      duration: 2500,
+    };
   
-   
-    ScrollReveal().reveal('.header1',{
-      delay:600,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.header2',{
-      delay:750,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.otherContainer',{
-      delay:1000,
-      reset: true,
-      distance:'80px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.paragraph',{
-      delay:900,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.head1',{
-      delay:400,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.paragraph1',{
-      delay:500,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.head2',{
-      delay:600,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.paragraph2',{
-      delay:700,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.head3',{
-      delay:800,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.paragraph3',{
-      delay:900,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.paragraph4',{
-      delay:1000,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-   
-   
-    
-
-    ScrollReveal().reveal('#container',{
-      delay:200,
-      reset: true,
-      distance:'50px',
-      origin:'right',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.twoDiv',{
-      delay:500,
-      reset: true,
-      distance:'50px',
-      origin:'right',
-      opacity:0,
-      duration:2500
-    }); 
-    ScrollReveal().reveal('.threeDiv',{
-      delay:700,
-      reset: true,
-      distance:'50px',
-      origin:'right',
-      opacity:0,
-      duration:2500
-    });
-    
-    ScrollReveal().reveal('.fourDiv',{
-      delay:900,
-      reset: true,
-      distance:'50px',
-      origin:'right',
-      opacity:0,
-      duration:2500
-    });
-   
-    ScrollReveal().reveal('#post1',{
-      delay:200,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('#post2',{
-      delay:400,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('#post3',{
-      delay:600,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      
-      duration:2500
-    });
-    ScrollReveal().reveal('#post4',{
-      delay:800,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.footerPartnership',{
-      delay:200,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.footerCompany',{
-      delay:300,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
-    ScrollReveal().reveal('.footerFAQ',{
-      delay:400,
-      reset: true,
-      distance:'50px',
-      origin:'bottom',
-      opacity:0,
-      duration:2500
-    });
+    const applyScrollReveal = () => {
+      if (window.matchMedia('(min-width: 781px)').matches) {
+        ScrollReveal().reveal('#header, .aboutPhoto', {
+          ...commonSettings,
+          delay: 200,
+          distance: '100px',
+          duration: 2000,
+        });
+        ScrollReveal().reveal('.header1', { ...commonSettings, delay: 600 });
+        ScrollReveal().reveal('.header2', { ...commonSettings, delay: 750 });
+        ScrollReveal().reveal('.otherContainer', {
+          ...commonSettings,
+          delay: 1000,
+          distance: '80px',
+        });
+        ScrollReveal().reveal('.paragraph', { ...commonSettings, delay: 900 });
+        ScrollReveal().reveal('.head1', { ...commonSettings, delay: 400 });
+        ScrollReveal().reveal('.paragraph1', { ...commonSettings, delay: 500 });
+        ScrollReveal().reveal('.head2', { ...commonSettings, delay: 600 });
+        ScrollReveal().reveal('.paragraph2', { ...commonSettings, delay: 700 });
+        ScrollReveal().reveal('.head3', { ...commonSettings, delay: 800 });
+        ScrollReveal().reveal('.paragraph3', { ...commonSettings, delay: 900 });
+        ScrollReveal().reveal('.paragraph4', { ...commonSettings, delay: 1000 });
+        ScrollReveal().reveal('#container', {
+          ...commonSettings,
+          delay: 200,
+          origin: 'right',
+        });
+        ScrollReveal().reveal('.twoDiv', { ...commonSettings, delay: 500, origin: 'right' });
+        ScrollReveal().reveal('.threeDiv', { ...commonSettings, delay: 700, origin: 'right' });
+        ScrollReveal().reveal('.fourDiv', { ...commonSettings, delay: 900, origin: 'right' });
+        ScrollReveal().reveal('#post1', { ...commonSettings, delay: 200 });
+        ScrollReveal().reveal('#post2', { ...commonSettings, delay: 400 });
+        ScrollReveal().reveal('#post3', { ...commonSettings, delay: 600 });
+        ScrollReveal().reveal('#post4', { ...commonSettings, delay: 800 });
+        ScrollReveal().reveal('.footerPartnership', { ...commonSettings, delay: 200 });
+        ScrollReveal().reveal('.footerCompany', { ...commonSettings, delay: 300 });
+        ScrollReveal().reveal('.footerFAQ', { ...commonSettings, delay: 400 });
+      }
+    };
+  
+    // Run the function on page load
+    applyScrollReveal();
+  
+    // Optional: Add a listener for window resizing
+    window.addEventListener('resize', applyScrollReveal);
   });
+  
+
+
+
+
+
+
+
+
+  // Add this JavaScript to make the dropdown functional
+document.addEventListener('DOMContentLoaded', function() {
+  const dropDown = document.querySelector('.dropDown');
+  const dropdownContent = document.querySelector('.dropdownContent');
+  
+  dropDown.addEventListener('click', function() {
+      dropdownContent.classList.toggle('active');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+      if (!dropDown.contains(event.target)) {
+          dropdownContent.classList.remove('active');
+      }
+  });
+});
   </script>
    
 </body>
