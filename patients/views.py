@@ -1,6 +1,7 @@
 import json
 import bcrypt
 import logging
+from Base.models import Drug
 from django.urls import reverse
 from Base.models import Doctors
 from Base.models import Patients
@@ -411,3 +412,35 @@ def delete_account(request):
             'success': False,
             'message': f'Error deleting account: {str(e)}'
         }, status=500)
+        
+        
+        
+        
+# Drugs section
+
+# views.py
+from django.http import JsonResponse
+from Base.models import Drug
+
+def get_drugs(request):
+    drugs = Drug.objects.all()
+    drugs_list = []
+    
+    for drug in drugs:
+        # Ensure the image_url starts with /static/
+        image_url = drug.image_url
+        if not image_url.startswith('/static/'):
+            # Remove leading backslash if present and add /static/ prefix
+            image_url = '/static/' + image_url.lstrip('\\')
+        
+        drugs_list.append({
+            'id': drug.id,
+            'name': drug.name,
+            'price': float(drug.price),
+            'description': f"{drug.name}, {drug.description}",
+            'image_url': image_url,  # Use the formatted path
+            'category': drug.category,
+            'quantity': drug.quantity
+        })
+    
+    return JsonResponse(drugs_list, safe=False)

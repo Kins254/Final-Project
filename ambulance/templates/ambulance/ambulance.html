@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ambulance</title>
+    <link rel="stylesheet" href="{% static 'CSS/ambulance.css'%}"/>
+    <!-- here, we are linking our css with the html-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- here, we are linking our google fonts with the html-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script
+      src="https://kit.fontawesome.com/d510096626.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.4.2/uicons-brands/css/uicons-brands.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="body">
+    <div class="menu">
+      <button class="menuIcon" onclick="toggleMenu()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <div class="menuInfo">
+        <div class="profileInfo">
+          <i onclick="toggleMenu()" id="close" class="fa-solid fa-xmark"></i>
+          <div class="photo">
+            <img src="{% static 'Images/profile_pic.PNG'%}" alt="profile-pic"/>
+          </div>
+          <h3 class="greetings"></h3>
+        </div>
+        <div class="login" onclick="popUp()">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <h3>LOG IN</h3>
+        </div>
+        <div class="settings">
+          <i class="fa-solid fa-gear"></i>
+          <h3>SETTINGS</h3>
+        </div>
+        <div class="delete">
+          <i class="fa-solid fa-trash"></i>
+          <h3>DELETE ACCOUNT</h3>
+        </div>
+      </div>
+      <div class="map"><i class="fa-solid fa-location-dot"></i></div>
+      <div class="online">
+        <div class="innerDiv"></div>
+      </div>
+      <div class="onlineDetail">
+        <h3>Connect</h3>
+      </div>
+      <div class="bottom">
+        <div class="bottom1"><i class="fa-solid fa-phone"></i></div>
+        <div class="bottom2"><i class="fa-regular fa-message"></i></div>
+      </div>
+      <div class="loginPopUp">
+        <i onclick="popUp()" id="closeLog" class="fa-solid fa-xmark"></i>
+        <form class="form">
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="Email"
+            required
+          />
+
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <button id="logIn">LOG IN</button>
+        </form>
+      </div>
+    </div>
+    <script src="{% static "JS/ambulance.js"%}"></script>
+  </body>
+</html>

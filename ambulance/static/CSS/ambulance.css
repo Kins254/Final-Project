@@ -1,0 +1,325 @@
+@media (max-width: 480px){
+    body{
+        font-family: poppins;
+        height:100dvh;
+        width:100dvw;
+        background-color: aquamarine;
+    }
+
+.menuIcon{
+    position:absolute;
+    height:9%;
+    width:20%;
+    top:5%;
+    border-radius: 50%;
+display:flex;
+justify-content: center;
+align-items: center;
+background-color: aliceblue;
+font-size: 1.5em;
+cursor: pointer;
+border: none;
+} 
+
+.menuInfo{
+    position: absolute;
+    height:100dvh;
+    width:80%;
+    left:0%;
+   z-index: 1;
+    top:0%;
+    background-color: azure;
+    transform: translateX(-100%);
+    transition: all 1s ease;
+}
+.menuInfo.active{
+    transform: translateX(0%);
+}
+.menuInfo.blur{
+    filter: blur(10px);
+}
+.menuInfo i{
+    position: absolute;
+    font-size: 2.5em;
+    right: 2%;
+transition:.3s ease all ;
+}
+#close:hover{
+    color:red
+}
+.profileInfo{
+position: absolute;
+height:30%;
+width:100%;
+background-color: rgb(225, 238, 234);
+}
+.photo{
+    position: absolute;
+    height:60%;
+    width:49%;
+    left:10%;
+    top:1%;
+    border-radius: 50%;
+   
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.photo img{
+    height:100%;
+    width:100%;
+    position:absolute;
+    
+}
+.greetings{
+    position: absolute;
+    height:30%;
+    width:100%;
+    background-color: transparent;
+    bottom:0%;
+}
+
+.login{
+    height:7%;
+width:95%;
+top:65%;
+    position: absolute;
+    background-color:transparent;
+    box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.75);
+z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:rgb(55, 25, 224);
+    transition: all 0.3s ease;
+}
+.login:hover{
+    transform: scale(1.05);
+}
+.login i{
+    position: absolute;
+    font-size:2.5em;
+    left:5%;
+
+}
+.settings{
+    height:7%;
+    width:95%;
+    top:75%;
+    position: absolute;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.75);
+transition: all 0.3s ease;
+z-index: 1;
+}
+.settings:hover{
+    transform: scale(1.05);
+}
+.settings i{
+    position: absolute;
+    font-size:2.5em;
+    left:5%;
+}
+.delete{
+    height:7%;
+    width:95%;
+    top:85%;
+    background-color: transparent;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 2px 5px 0px rgba(0,0,0,0.75);
+color: red;
+transition: all 0.3s ease;
+z-index: 1;
+}
+.delete:hover{
+    transform: scale(1.05);
+}
+.delete i{
+    position: absolute;
+    font-size:2.5em;
+    left:5%;
+}
+.map{
+    position: absolute;
+    height:10%;
+    width:20%;
+    background-color: transparent;
+    top:20%;
+    right:5%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5em;
+    color: rgb(4, 0, 255);
+    border: 2px solid ;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.online{
+    position: absolute;
+    height: 25%;
+    width: 49%;
+    
+    border-radius: 50%;
+    top:40%;
+    left:27%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #00ffd5; /* Set the circle's base color */
+    
+     
+}
+
+
+
+.innerDiv{
+position: absolute;
+height: 90%;
+    width: 90%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border:7px solid white;
+    transform: scale(0.65);
+    transition: all 0.9s ease;
+    opacity: 1;
+    animation: pulse 2s infinite;
+}
+/* Keyframes for glowing pulse effect */
+@keyframes pulse {
+   0%{
+    transform: scale(0.65);
+    opacity:1;
+   }
+   100%{
+    transform: scale(1);
+    opacity:0;
+   }
+}
+.innerDiv h3{
+    position: absolute;
+    opacity: 1;
+}
+.onlineDetail{
+    position:absolute;
+    height: 10%;
+    width: 25%;
+    background-color: transparent;
+    top:47%;
+    left:37%;
+    font-size: 1.2em;
+}
+.bottom{
+    position:absolute;
+    height:20% ;
+    width: 90%;
+    bottom:5%;
+    left:5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(238, 221, 221);
+    border-radius: 5px;
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+}
+.bottom1,.bottom2{
+    position:absolute;
+    font-size: 2.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:90% ;
+    width: 40%;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.bottom1{
+    left:3%;
+    background-color: white;
+    color: rgb(8, 173, 8);
+}
+.bottom2{
+   right:3%;
+    background-color: white;
+    color: blue;
+}
+.loginPopUp{
+    position:absolute;
+    height:30%;
+    width:50%;
+    background-color: rgb(175, 187, 197);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top:30%;
+    border-radius: 10px;
+    left:25%; 
+     opacity:0;
+    transform: translateX(-200%);
+    z-index: 2;
+    transition: all 0.9s ease;
+    
+}
+.loginPopUp.active{
+    opacity:1;
+    transform: translateX(0%);
+    
+
+}
+#closeLog{
+    position: absolute;
+    font-size: 1.5em;
+    font-weight: 600;
+    right:3%;
+    top:1%
+}
+#closeLog:hover{
+    color: brown;
+}
+.loginPopUp input{
+    position:absolute;
+    height: 20%;
+    width:90%;
+    border: none;
+    border-radius: 10px;
+    padding: 1px;
+    left:4%;
+}
+#email{
+    top:15%;
+}
+#password{
+   top:45%;
+}
+#logIn{
+    position:absolute;
+    top:75%;
+    left:30%;
+    height:15%;
+    width: 45%;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    background-color: aqua;
+  
+}
+
+}

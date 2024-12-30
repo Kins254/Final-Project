@@ -1,4 +1,6 @@
-/*Doctors*/
+body{
+  font-family:poppins;
+}
 .doctor {
     position: absolute;
     height: 100vh;

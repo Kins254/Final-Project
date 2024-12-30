@@ -10,4 +10,5 @@ urlpatterns = [
     path('delete_appointment/', views.delete_appointment, name='delete_appointment'),
     path('account_edit/',views.account_edit,name='account_edit'),
     path('delete_account/',views.delete_account,name='delete_account'),
+    path('get_drugs/',views.get_drugs,name='get_drugs'),
 ]

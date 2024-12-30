@@ -1,4 +1,6 @@
-/*admin*/
+body{
+  font-family:poppins;
+}
 .admin{
     position: absolute;
     height: 100vh;
@@ -65,15 +67,16 @@ z-index: 1000;
 .greetings{
 position: absolute;
 top:28%;
-font-size: 1.3em;
+font-size: 1.05em;
 left:7%;
 color: aliceblue;
 }
+
 #username{
     position: absolute;
     top:28%;
-    font-size: 1.3em;
-    left:64%;
+    font-size: 1.05em;
+    left:70%;
     color: aliceblue;
     
 }

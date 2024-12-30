@@ -65,3 +65,15 @@ class Appointment(models.Model):
     class Meta:
         db_table = 'appointments'
 
+class Drug(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, unique=True)  # Unique name for the drug
+    price = models.DecimalField(max_digits=10, decimal_places=2)  # Price with two decimals
+    description = models.TextField()  # Detailed description of the drug
+    image_url = models.URLField(max_length=255)  # URL to the image of the drug
+    category = models.CharField(max_length=255)  # Category of the drug (e.g., Antibiotics)
+    quantity=models.IntegerField()
+    
+    class Meta:
+        managed = False
+        db_table = 'drugs'

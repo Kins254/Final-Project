@@ -264,6 +264,93 @@ function deleteAppointmentPat(id) {
   });
 }
 
+//Pharmarcy section
+document.addEventListener('DOMContentLoaded', function() {
+  const drugsContainer = document.querySelector('.DrugsContainer');
+  
+  fetch('http://127.0.0.1:8000/patients/get_drugs/')
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then(data => {
+      // Clear existing content
+      drugsContainer.innerHTML = '';
+      
+      data.forEach(drug => {
+          // Fixing image path by replacing backslashes with forward slashes
+          const imagePath = drug.image_url.replace(/\\/g, '/');
+          
+          const drugDiv = document.createElement('div');
+          drugDiv.classList.add('item');
+          
+          // Creating HTML structure for each drug
+          drugDiv.innerHTML = `
+              <div class="ImageContainer">
+                  <img src="${imagePath}" 
+                       alt="${drug.name}" 
+                       onerror="handleImageError(this, '${drug.name}')"
+                  >
+              </div>
+              <div class="Description">
+                  ${drug.description}
+              </div>
+              <div class="price">
+                  KSh.${drug.price.toFixed(2)}
+              </div>
+              <div class="chart">
+                  <i class="fa-solid fa-cart-shopping"></i>
+              </div>
+          `;
+          
+          // Adding click event for cart icon
+          const cartIcon = drugDiv.querySelector('.chart');
+          cartIcon.addEventListener('click', (e) => {
+              e.stopPropagation();
+              addToCart(drug);
+          });
+          
+          drugsContainer.appendChild(drugDiv);
+      });
+  })
+  .catch(error => {
+      console.error('Error fetching drug data:', error);
+      drugsContainer.innerHTML = `
+          <div class="error-message">
+              Failed to load products. Please try again later.
+          </div>
+      `;
+  });
+});
+
+// Separate function to handle image errors
+function handleImageError(img, drugName) {
+  const container = img.parentElement;
+  container.innerHTML = `
+      <div style="height:100%; display:flex; align-items:center; justify-content:center; background:#f0f0f0; font-family: poppins; padding: 10px; text-align: center;">
+          ${drugName}
+      </div>
+  `;
+}
+
+function addToCart(drug) {
+  console.log(`Adding ${drug.name} to cart`);
+  // Add  cart functionality here
+}
+
+/* Function to show drug details (implement as needed)
+function showDrugDetails(drug) {
+  console.log(`Showing details for ${drug.name}`);
+  // Add your detail view functionality here
+}
+
+*/
+
+
+
+
 //Ambulance section
 async function getUserLocationAndTime() {
   try {
